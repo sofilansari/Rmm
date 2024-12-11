@@ -13,7 +13,6 @@ import com.ids.argus.dto.UserDto;
 import com.ids.argus.security.JwtUtil;
 import com.ids.argus.services.UserServices;
 
-//In Your RequestMapping path is too short so make it proper readable format Like /api/v1/project/
 
 @RestController
 @RequestMapping("/api")
