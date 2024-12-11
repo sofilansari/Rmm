@@ -1,10 +1,13 @@
 package com.ids.argus.services;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.ids.argus.dto.LoginRequest;
 import com.ids.argus.dto.RegisterRequest;
 import com.ids.argus.dto.UserDto;
+import com.ids.argus.model.User;
+import com.ids.argus.repo.UserRepository;
 
 import jakarta.transaction.Transactional;
 
@@ -12,18 +15,43 @@ import jakarta.transaction.Transactional;
 @Transactional
 public class UserServicesImpl implements UserServices{
 	
-	
+	 private final UserRepository userRepository;
+	    private final PasswordEncoder passwordEncoder;
 
-	@Override
-	public UserDto registerUser(RegisterRequest registerRequest) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	    public UserServicesImpl(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+	        this.userRepository = userRepository;
+	        this.passwordEncoder = passwordEncoder;
+	    }
 
-	@Override
-	public UserDto loginUser(LoginRequest loginRequest) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	    @Override
+	    public UserDto registerUser(RegisterRequest registerRequest) {
+	        
+	        String encodedPassword = passwordEncoder.encode(registerRequest.getPassword());
 
+	        
+	        User users = new User();
+	        users.setUseName(registerRequest.getUseName());
+	        users.setEmailId(registerRequest.getEmailId());
+	        users.setPassword(encodedPassword);
+	        users.setResetPaaword(registerRequest.getResetPaaword());
+
+	        User savedUser = userRepository.save(users);
+
+	        return new UserDto(savedUser.getPassword(), savedUser.getEmailId());
+	    }
+
+	    @Override
+	    public UserDto loginUser(LoginRequest loginRequest) {
+	        
+	        User user = userRepository.findByEmailId(loginRequest.getEmailId())
+	                .orElseThrow(() -> new RuntimeException("User not found"));
+
+	        
+	        if (!passwordEncoder.matches(loginRequest.getPassword(), user.getPassword())) {
+	            throw new RuntimeException("Invalid credentials");
+	        }
+
+	        
+	        return new UserDto(user.getEmailId(), user.getPassword());
+	    }
 }

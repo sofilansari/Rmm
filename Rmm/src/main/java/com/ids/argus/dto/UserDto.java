@@ -2,21 +2,21 @@ package com.ids.argus.dto;
 
 public class UserDto {
 	
-	private String userName;
+	private String password;
     private String emailId;
     
-	public UserDto(String userName, String emailId) {
-		
-		this.userName = userName;
+	public UserDto(String password, String emailId) {
+		super();
+		this.password = password;
 		this.emailId = emailId;
 	}
 
-	public String getUserName() {
-		return userName;
+	public String getPassword() {
+		return password;
 	}
 
-	public void setUserName(String userName) {
-		this.userName = userName;
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	public String getEmailId() {
@@ -27,6 +27,7 @@ public class UserDto {
 		this.emailId = emailId;
 	}
     
+	
     
 
 }
