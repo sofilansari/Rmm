@@ -15,44 +15,43 @@ import jakarta.transaction.Transactional;
 @Transactional
 public class UserServicesImpl implements UserServices{
 	
-	private final UserRepository userRepository;
-	
-	private final PasswordEncoder passwordEncoder;
-	
-	
-	
+	 private final UserRepository userRepository;
+	    private final PasswordEncoder passwordEncoder;
 
-	public UserServicesImpl(UserRepository userRepository, PasswordEncoder passwordEncoder) {
-		this.userRepository = userRepository;
-		this.passwordEncoder = passwordEncoder;
-	}
+	    public UserServicesImpl(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+	        this.userRepository = userRepository;
+	        this.passwordEncoder = passwordEncoder;
+	    }
 
-	@Override
-	public UserDto registerUser(RegisterRequest registerRequest) {
-		String encodedPassword =passwordEncoder.encode(registerRequest.getPassword());
-		
-		User users=new User();
-		
-		users.setUseName(registerRequest.getUseName());
-		users.setEmailId(registerRequest.getEmailId());
-		users.setPassword(encodedPassword);
-		users.setResetPaaword(registerRequest.getResetPaaword());
-		
-		User saveUser=userRepository.save(users);
-		
-		return new UserDto(saveUser.getPassword(), saveUser.getEmailId());
-	}
+	    @Override
+	    public UserDto registerUser(RegisterRequest registerRequest) {
+	        
+	        String encodedPassword = passwordEncoder.encode(registerRequest.getPassword());
 
-	@Override
-	public UserDto loginUser(LoginRequest loginRequest) {
-		User user=userRepository.findByEmailId(loginRequest.getEmailId())
-				.orElseThrow(() ->new RuntimeException("User not found"));
-		if(!passwordEncoder.matches(loginRequest.getEmailId(), user.getEmailId())) {
-			
-			throw new RuntimeException("Invalid credentials");
-		}
-		
-		return new UserDto(user.getEmailId(), user.getUseName());
-	}
+	        
+	        User users = new User();
+	        users.setUseName(registerRequest.getUseName());
+	        users.setEmailId(registerRequest.getEmailId());
+	        users.setPassword(encodedPassword);
+	        users.setResetPaaword(registerRequest.getResetPaaword());
 
+	        User savedUser = userRepository.save(users);
+
+	        return new UserDto(savedUser.getPassword(), savedUser.getEmailId());
+	    }
+
+	    @Override
+	    public UserDto loginUser(LoginRequest loginRequest) {
+	        
+	        User user = userRepository.findByEmailId(loginRequest.getEmailId())
+	                .orElseThrow(() -> new RuntimeException("User not found"));
+
+	        
+	        if (!passwordEncoder.matches(loginRequest.getPassword(), user.getPassword())) {
+	            throw new RuntimeException("Invalid credentials");
+	        }
+
+	        
+	        return new UserDto(user.getEmailId(), user.getPassword());
+	    }
 }
