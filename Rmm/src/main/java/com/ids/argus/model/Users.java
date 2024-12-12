@@ -1,10 +1,15 @@
 package com.ids.argus.model;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 
 @Entity
 public class Users extends BaseAuditable{
 	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String firstName;
 	private String lastName;
@@ -14,7 +19,7 @@ public class Users extends BaseAuditable{
 	private String contact;
 	private String address;
 	private int states;
-	private boolean delete;
+	private boolean isDelete;
 	
 	public Users() {
 		super();
@@ -22,7 +27,7 @@ public class Users extends BaseAuditable{
 	}
 
 	public Users(Long id, String firstName, String lastName, String emailId, String password, String confirmPassword,
-			String contact, String address, int states, boolean delete) {
+			String contact, String address, int states, boolean isDelete) {
 		super();
 		this.id = id;
 		this.firstName = firstName;
@@ -33,7 +38,7 @@ public class Users extends BaseAuditable{
 		this.contact = contact;
 		this.address = address;
 		this.states = states;
-		this.delete = delete;
+		this.isDelete = isDelete;
 	}
 
 	public Long getId() {
@@ -109,11 +114,11 @@ public class Users extends BaseAuditable{
 	}
 
 	public boolean isDelete() {
-		return delete;
+		return isDelete;
 	}
 
-	public void setDelete(boolean delete) {
-		this.delete = delete;
+	public void setDelete(boolean isDelete) {
+		this.isDelete = isDelete;
 	}
 	
 	

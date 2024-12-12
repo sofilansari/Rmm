@@ -9,7 +9,7 @@ public class DoctorDto {
 	private String lastName;
 	private String groupName;
 	private boolean state;
-	private boolean delete;
+	private boolean isDelete;
 	private String speciality;
 	private String emailId;
 	private String alternativeEmailId;
@@ -21,8 +21,8 @@ public class DoctorDto {
 		dto.setFirstName(doctor.getFirstName());
 		dto.setLastName(doctor.getLastName());
 		dto.setGroupName(doctor.getGroupName());
-		dto.setState(doctor.getState());
-		dto.setDelete(doctor.isDelete());
+		dto.setState(doctor.isState());
+		dto.setisDelete(doctor.isDelete());
 		dto.setSpeciality(doctor.getSpeciality());
 		dto.setEmailId(doctor.getEmailId());
 		dto.setAlternativeEmailId(doctor.getAlternativeEmailId());
@@ -73,11 +73,11 @@ public class DoctorDto {
 	}
 
 	public boolean isDelete() {
-		return delete;
+		return isDelete;
 	}
 
-	public void setDelete(boolean delete) {
-		this.delete = delete;
+	public void setisDelete(boolean isDelete) {
+		this.isDelete = isDelete;
 	}
 
 	public String getSpeciality() {
