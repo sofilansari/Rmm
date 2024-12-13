@@ -6,7 +6,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 @Entity
-public class Contact {
+public class Contact extends BaseAuditable{
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -14,6 +14,7 @@ public class Contact {
 	private String type;
 	private String phoneNo;
 	private boolean isDeleted;
+	
 	public Contact() {
 		super();
 		// TODO Auto-generated constructor stub

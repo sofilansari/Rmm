@@ -12,7 +12,6 @@ import com.ids.argus.dto.RegisterRequest;
 import com.ids.argus.dto.UserDto;
 import com.ids.argus.security.JwtUtil;
 import com.ids.argus.services.UserServices;
-
 @RestController
 @RequestMapping("/api")
 public class AuthController {
