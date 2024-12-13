@@ -12,7 +12,6 @@ public class AddressDto {
     private String zipcode;
     private Boolean isDeleted;
 
-    // Conversion method from Address entity to AddressDto
     public AddressDto toDo(Address address) {
         if (address == null) {
             return null;
@@ -28,7 +27,7 @@ public class AddressDto {
         return dto;
     }
 
-    // Getters and Setters
+ 
     public Long getId() {
         return id;
     }
