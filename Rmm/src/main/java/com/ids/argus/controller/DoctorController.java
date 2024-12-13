@@ -14,7 +14,7 @@ import com.ids.argus.dto.DoctorDto;
 import com.ids.argus.services.DoctorServices;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/docter")
 public class DoctorController {
 	
 	private final DoctorServices doctorServices;

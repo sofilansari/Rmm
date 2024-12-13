@@ -11,49 +11,48 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ids.argus.dto.UsersDto;
-import com.ids.argus.services.UsersServices;
+import com.ids.argus.dto.AddressDto;
+import com.ids.argus.services.AddressServices;
 
 @RestController
-@RequestMapping("/api/users")
-public class UsersController {
+@RequestMapping("/api")
+public class AddressController {
 	
-	private final UsersServices usersServices;
+	private final AddressServices addressServices;
 
-	public UsersController(UsersServices usersServices) {
-		
-		this.usersServices = usersServices;
+	public AddressController(AddressServices addressServices) {
+		super();
+		this.addressServices = addressServices;
 	}
 	
-	
 	@GetMapping()
-	public List<UsersDto>gettAllUser(){
-		return usersServices.gettAllUser();
+	public List<AddressDto>getAllAddress(){
+		return addressServices.getAllAddress();
 		
 	}
 	
 	@GetMapping("/{id}")
-	public UsersDto findById(@PathVariable Long id) {
-		return usersServices.findById(id);
+	public AddressDto findById(@PathVariable Long id) {
+		return addressServices.findById(id);
 		
 	}
 	
 	@PostMapping("/")
-	public UsersDto create(@RequestBody UsersDto usersDto) {
-		return usersServices.create(usersDto);
+	public AddressDto create(@RequestBody AddressDto addressDto) {
+		return addressServices.create(addressDto);
 		
 	}
 	
 	@PutMapping("/{id}")
-	public UsersDto update(@PathVariable Long id, @RequestBody UsersDto usersDto) {
-		return usersServices.update(id,usersDto);
+	public AddressDto update(@PathVariable Long id, @RequestBody AddressDto addressDto) {
+		return addressServices.update(id,addressDto);
 		
 	}
 	
 	@DeleteMapping("/{id}")
 	public void delete(@PathVariable Long id) {
 		
-		usersServices.delete(id);
+		addressServices.delete(id);
 	}
 
 }
