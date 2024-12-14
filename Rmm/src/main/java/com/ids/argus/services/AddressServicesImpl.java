@@ -31,25 +31,43 @@ public class AddressServicesImpl implements AddressServices{
 
 	@Override
 	public AddressDto findById(Long id) {
-		// TODO Auto-generated method stub
-		return null;
+		Address address=addressRepository.findById(id).
+				orElseThrow(()-> new RuntimeException("Address not found with id"+id));
+		return new AddressDto().toDo(address);
 	}
 
 	@Override
 	public AddressDto create(AddressDto addressDto) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		Address newAddress = new Address();
+        newAddress.setType(addressDto.getType());
+        newAddress.setCity(addressDto.getCity());
+        newAddress.setState(addressDto.getState());
+        newAddress.setZipcode(addressDto.getZipcode());
+        newAddress.setDeleted(addressDto.getIsDeleted());
+
+      
+        if (addressDto.getParentAddressId() != null) {
+            Address parentAddress = addressRepository.findById(addressDto.getParentAddressId())
+                    .orElseThrow(() -> new RuntimeException("Parent Address not found with id " + addressDto.getParentAddressId()));
+            newAddress.setAddress(parentAddress);
+        }
+
+     
+        Address savedAddress = addressRepository.save(newAddress);
+
+        return new AddressDto().toDo(savedAddress);
 	}
 
 	@Override
 	public AddressDto update(Long id, AddressDto addressDto) {
-		// TODO Auto-generated method stub
+		
 		return null;
 	}
 
 	@Override
 	public void delete(Long id) {
-		// TODO Auto-generated method stub
+		
 		
 	}
 	
