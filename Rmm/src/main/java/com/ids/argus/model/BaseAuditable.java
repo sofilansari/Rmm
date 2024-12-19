@@ -1,6 +1,8 @@
 package com.ids.argus.model;
 
-import java.util.Date;
+import java.time.LocalDateTime;
+
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.MappedSuperclass;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.PrePersist;
@@ -10,23 +12,25 @@ import jakarta.persistence.PreUpdate;
 public class BaseAuditable {
 	
 		@OneToOne
+		@JoinColumn(name="id")
 	    private Users createBy;
 
 	    @OneToOne
+	    @JoinColumn(name="id")
 	    private Users modifiedBy;
 
-	    private Date createOn;
+	    private LocalDateTime createOn;
 
-	    private Date modifiedOn;
+	    private LocalDateTime modifiedOn;
 
 	    @PrePersist
 	    protected void onCreate() {
-	        this.createOn = new Date(); // Automatically set current date on creation
+	        this.createOn =  LocalDateTime.now(); // Automatically set current date on creation
 	    }
 
 	    @PreUpdate
 	    protected void onUpdate() {
-	        this.modifiedOn = new Date(); // Automatically set current date on update
+	        this.modifiedOn =  LocalDateTime.now(); // Automatically set current date on update
 	    }
 
 	    // Getters and Setters
@@ -46,19 +50,19 @@ public class BaseAuditable {
 	        this.modifiedBy = modifiedBy;
 	    }
 
-	    public Date getCreateOn() {
+	    public LocalDateTime getCreateOn() {
 	        return createOn;
 	    }
 
-	    public void setCreateOn(Date createOn) {
+	    public void setCreateOn(LocalDateTime createOn) {
 	        this.createOn = createOn;
 	    }
 
-	    public Date getModifiedOn() {
+	    public LocalDateTime getModifiedOn() {
 	        return modifiedOn;
 	    }
 
-	    public void setModifiedOn(Date modifiedOn) {
+	    public void setModifiedOn(LocalDateTime modifiedOn) {
 	        this.modifiedOn = modifiedOn;
 	    }
 

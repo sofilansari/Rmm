@@ -4,6 +4,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 
 @Entity
 public class Category extends BaseAuditable{
@@ -15,6 +16,9 @@ public class Category extends BaseAuditable{
 	private String stats;
 	private String type;
 	private boolean isDeleted;
+	
+	@ManyToOne
+	private Doctor doctor;
 	
 	public Category() {
 		super();
