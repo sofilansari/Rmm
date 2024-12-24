@@ -30,23 +30,22 @@ public class Doctor extends BaseAuditable{
 	@JoinColumn(name="id")
 	private List<Category>categories;
 	
-	@OneToMany
+	@OneToMany(fetch = FetchType.EAGER)
 	@JoinColumn(name="id")
 	private List<Address>addresses;
 	
-	@OneToMany
+	@OneToMany(fetch = FetchType.EAGER)
 	@JoinColumn(name="id")
 	private List<Contact>contacts;
-	
-	
-	
+
 	public Doctor() {
 		super();
 		
 	}
 
 	public Doctor(Long id, String type, String firstName, String lastName, String groupName, boolean state,
-			boolean isDelete, String speciality, String emailId, String alternativeEmailId) {
+			boolean isDelete, String speciality, String emailId, String alternativeEmailId, List<Category> categories,
+			List<Address> addresses, List<Contact> contacts) {
 		super();
 		this.id = id;
 		this.type = type;
@@ -58,6 +57,9 @@ public class Doctor extends BaseAuditable{
 		this.speciality = speciality;
 		this.emailId = emailId;
 		this.alternativeEmailId = alternativeEmailId;
+		this.categories = categories;
+		this.addresses = addresses;
+		this.contacts = contacts;
 	}
 
 	public Long getId() {
@@ -139,7 +141,32 @@ public class Doctor extends BaseAuditable{
 	public void setAlternativeEmailId(String alternativeEmailId) {
 		this.alternativeEmailId = alternativeEmailId;
 	}
+
+	public List<Category> getCategories() {
+		return categories;
+	}
+
+	public void setCategories(List<Category> categories) {
+		this.categories = categories;
+	}
+
+	public List<Address> getAddresses() {
+		return addresses;
+	}
+
+	public void setAddresses(List<Address> addresses) {
+		this.addresses = addresses;
+	}
+
+	public List<Contact> getContacts() {
+		return contacts;
+	}
+
+	public void setContacts(List<Contact> contacts) {
+		this.contacts = contacts;
+	}
+	
+	
 	
 
-	
 }

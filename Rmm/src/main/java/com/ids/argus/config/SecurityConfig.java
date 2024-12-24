@@ -18,11 +18,12 @@ public class SecurityConfig {
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-            .csrf(csrf -> csrf.disable()) // Disable CSRF for the entire app
+            .csrf(csrf -> csrf.disable()) 
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers(HttpMethod.POST, "/api/signup").permitAll() // Allow POST for signup
-                .requestMatchers(HttpMethod.POST, "/api/login").permitAll() // Allow POST for login
-                .anyRequest().authenticated() // Require authentication for all other requests
+                .requestMatchers(HttpMethod.POST, "/api/signup").permitAll() 
+                .requestMatchers(HttpMethod.POST, "/api/login").permitAll() 
+                .requestMatchers("/api/docter/**").permitAll()
+                .anyRequest().authenticated() 
             );
 
         return http.build();

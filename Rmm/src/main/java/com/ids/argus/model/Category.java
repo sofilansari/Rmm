@@ -1,9 +1,11 @@
 package com.ids.argus.model;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 
 @Entity
@@ -17,7 +19,8 @@ public class Category extends BaseAuditable{
 	private String type;
 	private boolean isDeleted;
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name="doctor_id")
 	private Doctor doctor;
 	
 	public Category() {

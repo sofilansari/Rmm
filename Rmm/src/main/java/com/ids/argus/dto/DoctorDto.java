@@ -1,18 +1,25 @@
 package com.ids.argus.dto;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import com.ids.argus.model.Doctor;
 
 public class DoctorDto {
 	
-	private String type;
-	private String firstName;
-	private String lastName;
-	private String groupName;
-	private boolean state;
-	private boolean isDelete;
-	private String speciality;
-	private String emailId;
-	private String alternativeEmailId;
+	private Long id;
+    private String type;
+    private String firstName;
+    private String lastName;
+    private String groupName;
+    private boolean state;
+    private boolean isDelete;
+    private String speciality;
+    private String emailId;
+    private String alternativeEmailId;
+    private List<CategoryDto> categories;
+    private List<AddressDto> addresses;
+    private List<ContactDto> contacts;
 	
 	public DoctorDto toDo(Doctor doctor) {
 		
@@ -22,15 +29,63 @@ public class DoctorDto {
 		dto.setLastName(doctor.getLastName());
 		dto.setGroupName(doctor.getGroupName());
 		dto.setState(doctor.isState());
-		dto.setisDelete(doctor.isDelete());
+		dto.setDelete(doctor.isDelete());
 		dto.setSpeciality(doctor.getSpeciality());
 		dto.setEmailId(doctor.getEmailId());
 		dto.setAlternativeEmailId(doctor.getAlternativeEmailId());
+		
+		dto.setCategories(doctor.getCategories().stream().map(categories -> new CategoryDto()
+				.toDo(categories))
+				.collect(Collectors.toList()));
+		
+		dto.setAddresses(doctor.getAddresses().stream().map(addresses -> new AddressDto().toDo(addresses)).
+				collect(Collectors.toList()));
+		
+		dto.setContacts(doctor.getContacts().stream().map(contact -> new ContactDto()
+				.toDo(contact)).collect(Collectors.toList()));
 		
 		return dto;	
 	
 
 }
+	
+	
+
+	public DoctorDto() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+
+
+	public DoctorDto(Long id, String type, String firstName, String lastName, String groupName, boolean state,
+			boolean isDelete, String speciality, String emailId, String alternativeEmailId,
+			List<CategoryDto> categories, List<AddressDto> addresses, List<ContactDto> contacts) {
+		super();
+		this.id = id;
+		this.type = type;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.groupName = groupName;
+		this.state = state;
+		this.isDelete = isDelete;
+		this.speciality = speciality;
+		this.emailId = emailId;
+		this.alternativeEmailId = alternativeEmailId;
+		this.categories = categories;
+		this.addresses = addresses;
+		this.contacts = contacts;
+	}
+
+
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
 
 	public String getType() {
 		return type;
@@ -76,7 +131,7 @@ public class DoctorDto {
 		return isDelete;
 	}
 
-	public void setisDelete(boolean isDelete) {
+	public void setDelete(boolean isDelete) {
 		this.isDelete = isDelete;
 	}
 
@@ -103,4 +158,30 @@ public class DoctorDto {
 	public void setAlternativeEmailId(String alternativeEmailId) {
 		this.alternativeEmailId = alternativeEmailId;
 	}
+
+	public List<CategoryDto> getCategories() {
+		return categories;
+	}
+
+	public void setCategories(List<CategoryDto> categories) {
+		this.categories = categories;
+	}
+
+	public List<AddressDto> getAddresses() {
+		return addresses;
+	}
+
+	public void setAddresses(List<AddressDto> addresses) {
+		this.addresses = addresses;
+	}
+
+	public List<ContactDto> getContacts() {
+		return contacts;
+	}
+
+	public void setContacts(List<ContactDto> contacts) {
+		this.contacts = contacts;
+	}
+
+	
 }
