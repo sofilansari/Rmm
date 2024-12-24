@@ -42,7 +42,7 @@ public class Doctor extends BaseAuditable{
 	
 	public Doctor() {
 		super();
-		// TODO Auto-generated constructor stub
+		
 	}
 
 	public Doctor(Long id, String type, String firstName, String lastName, String groupName, boolean state,

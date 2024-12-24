@@ -1,33 +1,45 @@
 package com.ids.argus.dto;
 
+import com.ids.argus.model.User;
+
 public class UserDto {
 	
-	private String password;
-    private String emailId;
-    
-	public UserDto(String password, String emailId) {
-		super();
-		this.password = password;
-		this.emailId = emailId;
-	}
+	 private String password;
+	    private String emailId;
+	    
+	    // Instance method to convert User entity to UserDto
+	    public UserDto toDo(User user) {
+	        UserDto dto = new UserDto();
+	        dto.setPassword(user.getPassword());
+	        dto.setEmailId(user.getEmailId());
+	        return dto;
+	    }
+	    
+	    // Constructor for UserDto
+	    public UserDto(String password, String emailId) {
+	        this.password = password;
+	        this.emailId = emailId;
+	    }
 
-	public String getPassword() {
-		return password;
-	}
+	    // Default constructor (optional)
+	    public UserDto() {
+	    }
 
-	public void setPassword(String password) {
-		this.password = password;
-	}
+	    // Getters and setters
+	    public String getPassword() {
+	        return password;
+	    }
 
-	public String getEmailId() {
-		return emailId;
-	}
+	    public void setPassword(String password) {
+	        this.password = password;
+	    }
 
-	public void setEmailId(String emailId) {
-		this.emailId = emailId;
-	}
-    
-	
-    
+	    public String getEmailId() {
+	        return emailId;
+	    }
+
+	    public void setEmailId(String emailId) {
+	        this.emailId = emailId;
+	    }    
 
 }
