@@ -1,9 +1,6 @@
 package com.ids.argus.model;
 
 import java.util.List;
-import java.util.Set;
-
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -27,9 +24,6 @@ public class Users extends BaseAuditable{
 	private int states;
 	private boolean isDelete;
 	
-	
-	 @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-	  private Set<Roles> roles;
 	
 	 @OneToMany
 	 @JoinColumn(name = "id")

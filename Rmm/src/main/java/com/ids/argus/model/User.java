@@ -1,6 +1,4 @@
 package com.ids.argus.model;
-
-import java.util.List;
 import java.util.Set;
 
 import jakarta.persistence.CascadeType;
@@ -8,7 +6,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 
 @Entity
@@ -17,11 +14,11 @@ public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	private String useName;
-	private String emailId;
-	private String password;
-	private String resetPaaword;
-	
+    private String userName;
+    private String emailId;
+    private String password;
+    private String resetPassword;
+
 	 @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
 	  private Set<Roles> roles;
 	
@@ -32,13 +29,13 @@ public class User {
 		// TODO Auto-generated constructor stub
 	}
 
-	public User(Long id, String useName, String emailId, String password, String resetPaaword) {
+	public User(Long id, String userName, String emailId, String password, String resetPassword) {
 		super();
 		this.id = id;
-		this.useName = useName;
+		this.userName = userName;
 		this.emailId = emailId;
 		this.password = password;
-		this.resetPaaword = resetPaaword;
+		this.resetPassword = resetPassword;
 	}
 
 	public Long getId() {
@@ -49,12 +46,12 @@ public class User {
 		this.id = id;
 	}
 
-	public String getUseName() {
-		return useName;
+	public String getUserName() {
+		return userName;
 	}
 
-	public void setUseName(String useName) {
-		this.useName = useName;
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 
 	public String getEmailId() {
@@ -73,12 +70,12 @@ public class User {
 		this.password = password;
 	}
 
-	public String getResetPaaword() {
-		return resetPaaword;
+	public String getresetPassword() {
+		return resetPassword;
 	}
 
-	public void setResetPaaword(String resetPaaword) {
-		this.resetPaaword = resetPaaword;
+	public void setresetPassword(String resetPassword) {
+		this.resetPassword = resetPassword;
 	}
 	
 	

@@ -5,10 +5,16 @@ public class UserDto {
 	private String password;
     private String emailId;
     
+	public UserDto() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
 	public UserDto(String password, String emailId) {
 		super();
 		this.password = password;
 		this.emailId = emailId;
+		
 	}
 
 	public String getPassword() {
@@ -27,7 +33,5 @@ public class UserDto {
 		this.emailId = emailId;
 	}
     
-	
     
-
 }
