@@ -2,10 +2,6 @@ package com.ids.argus.dto;
 
 import java.util.List;
 import java.util.stream.Collectors;
-
-import com.ids.argus.model.Address;
-import com.ids.argus.model.Category;
-import com.ids.argus.model.Contact;
 import com.ids.argus.model.Doctor;
 
 public class DoctorDto {
@@ -39,21 +35,19 @@ public class DoctorDto {
 	    	dto.setEmailId(doctor.getEmailId());
 	    	dto.setAlternativeEmailId(doctor.getAlternativeEmailId());
 	    	
-	    	if (doctor.getCategories() != null) {
-	            dto.setCategories(
-	                doctor.getCategories().stream()
-	                      .map(CategoryDto::toDto) // Assuming CategoryDto has a toDto method
-	                      .collect(Collectors.toList())
-	            );
-	        }
+	    	if(doctor.getCategories() !=null) {
+	    		dto.setCategories(doctor.getCategories().stream().map(category -> new CategoryDto().toDo(category))
+	    				.collect(Collectors.toList()));
+	    	}
 	    	
 	    	if(doctor.getAddresses() !=null) {
-	    		dto.setAddresses(doctor.getAddresses().stream().map(AddressDto::toDo)
+	    		dto.setAddresses(doctor.getAddresses().stream().map(address -> new AddressDto().toDo(address))
 	    				.collect(Collectors.toList()));
 	    	}
 	    	
 	    	if(doctor.getContacts() !=null) {
-	    		dto.setContacts(doctor.getContacts().stream().map(ContactDto::toDo).collect(Collectors.toList()));
+	    		dto.setContacts(doctor.getContacts().stream().map(contact -> new ContactDto().toDo(contact))
+	    				.collect(Collectors.toList()));
 	    	}
 	    	
 			return dto;
@@ -138,9 +132,5 @@ public class DoctorDto {
 		public void setContacts(List<ContactDto> contacts) {
 			this.contacts = contacts;
 		}
-	    
-	    
-	    
-
-	
+	    	
 }
