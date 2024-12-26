@@ -1,0 +1,424 @@
+[1mdiff --git a/Rmm/src/main/java/com/ids/argus/dto/RegisterRequest.java b/Rmm/src/main/java/com/ids/argus/dto/RegisterRequest.java[m
+[1mindex 333fac9..50e3219 100644[m
+[1m--- a/Rmm/src/main/java/com/ids/argus/dto/RegisterRequest.java[m
+[1m+++ b/Rmm/src/main/java/com/ids/argus/dto/RegisterRequest.java[m
+[36m@@ -2,16 +2,14 @@[m [mpackage com.ids.argus.dto;[m
+ [m
+ import java.util.Set;[m
+ [m
+[31m-import com.ids.argus.model.Roles;[m
+[31m-[m
+ public class RegisterRequest {[m
+ 	[m
+[31m-	private String userName;[m
+[31m-	private String emailId;[m
+[31m-	private String password;[m
+[31m-	private String resetPassword;[m
+[31m-	[m
+[31m-	private Set<Roles>roles;[m
+[32m+[m	[32m    private String userName;[m
+[32m+[m	[32m    private String emailId;[m
+[32m+[m	[32m    private String password;[m
+[32m+[m	[32m    private String resetPassword;[m
+[32m+[m[41m	    [m
+[32m+[m	[32m   private Set<RolesDto>roles;[m
+ 	[m
+ 	[m
+ 	public String getUserName() {[m
+[36m@@ -38,10 +36,10 @@[m [mpublic class RegisterRequest {[m
+ 	public void setresetPassword(String resetPassword) {[m
+ 		this.resetPassword = resetPassword;[m
+ 	}[m
+[31m-	public Set<Roles> getRoles() {[m
+[32m+[m	[32mpublic Set<RolesDto> getRoles() {[m
+ 		return roles;[m
+ 	}[m
+[31m-	public void setRoles(Set<Roles> roles) {[m
+[32m+[m	[32mpublic void setRoles(Set<RolesDto> roles) {[m
+ 		this.roles = roles;[m
+ 	}[m
+ 	[m
+[1mdiff --git a/Rmm/src/main/java/com/ids/argus/dto/RolesDto.java b/Rmm/src/main/java/com/ids/argus/dto/RolesDto.java[m
+[1mindex 2ca9739..70d0164 100644[m
+[1m--- a/Rmm/src/main/java/com/ids/argus/dto/RolesDto.java[m
+[1m+++ b/Rmm/src/main/java/com/ids/argus/dto/RolesDto.java[m
+[36m@@ -5,32 +5,36 @@[m [mimport com.ids.argus.model.Roles;[m
+ public class RolesDto {[m
+ 	[m
+ 	private Long id;[m
+[31m-	private String rolesName;[m
+[32m+[m	[32mprivate String name;[m
+ 	[m
+ 	public RolesDto toDo(Roles roles) {[m
+ 		RolesDto dto=new RolesDto();[m
+ 		[m
+ 		dto.setId(roles.getId());[m
+[31m-		dto.setRolesName(roles.getRolesName());[m
+[32m+[m		[32mdto.setName(roles.getname());[m
+ 		[m
+ 		return dto;[m
+ 		[m
+ 	}[m
+[31m-	[m
+[31m-	[m
+[32m+[m
+ 	public Long getId() {[m
+ 		return id;[m
+ 	}[m
+[32m+[m
+ 	public void setId(Long id) {[m
+ 		this.id = id;[m
+ 	}[m
+[31m-	public String getRolesName() {[m
+[31m-		return rolesName;[m
+[32m+[m
+[32m+[m	[32mpublic String getName() {[m
+[32m+[m		[32mreturn name;[m
+ 	}[m
+[31m-	public void setRolesName(String rolesName) {[m
+[31m-		this.rolesName = rolesName;[m
+[32m+[m
+[32m+[m	[32mpublic void setName(String name) {[m
+[32m+[m		[32mthis.name = name;[m
+ 	}[m
+ 	[m
+ 	[m
+[32m+[m[41m	[m
+[32m+[m[41m	[m
+ [m
+ }[m
+[1mdiff --git a/Rmm/src/main/java/com/ids/argus/dto/UserDto.java b/Rmm/src/main/java/com/ids/argus/dto/UserDto.java[m
+[1mindex 5459105..190f55a 100644[m
+[1m--- a/Rmm/src/main/java/com/ids/argus/dto/UserDto.java[m
+[1m+++ b/Rmm/src/main/java/com/ids/argus/dto/UserDto.java[m
+[36m@@ -1,10 +1,20 @@[m
+ package com.ids.argus.dto;[m
+ [m
+[32m+[m[32mimport com.ids.argus.model.User;[m
+[32m+[m
+ public class UserDto {[m
+ 	[m
+ 	private String password;[m
+     private String emailId;[m
+     [m
+[32m+[m[32m      public UserDto toDo(User user) {[m
+[32m+[m[41m    	[m
+[32m+[m[32m        UserDto dto = new UserDto();[m
+[32m+[m[32m        dto.setPassword(user.getPassword());[m
+[32m+[m[32m        dto.setEmailId(user.getEmailId());[m
+[32m+[m[32m        return dto;[m
+[32m+[m[32m    }[m
+[32m+[m[41m      [m
+ 	public UserDto() {[m
+ 		super();[m
+ 		// TODO Auto-generated constructor stub[m
+[1mdiff --git a/Rmm/src/main/java/com/ids/argus/model/Roles.java b/Rmm/src/main/java/com/ids/argus/model/Roles.java[m
+[1mindex f540c02..d136401 100644[m
+[1m--- a/Rmm/src/main/java/com/ids/argus/model/Roles.java[m
+[1m+++ b/Rmm/src/main/java/com/ids/argus/model/Roles.java[m
+[36m@@ -1,9 +1,11 @@[m
+ package com.ids.argus.model;[m
+ [m
+ import jakarta.persistence.Entity;[m
+[32m+[m[32mimport jakarta.persistence.FetchType;[m
+ import jakarta.persistence.GeneratedValue;[m
+ import jakarta.persistence.GenerationType;[m
+ import jakarta.persistence.Id;[m
+[32m+[m[32mimport jakarta.persistence.JoinColumn;[m
+ import jakarta.persistence.ManyToOne;[m
+ [m
+ @Entity[m
+[36m@@ -11,34 +13,54 @@[m [mpublic class Roles extends BaseAuditable{[m
+ 	[m
+ 	@Id[m
+ 	@GeneratedValue(strategy = GenerationType.IDENTITY)[m
+[31m-	private Long id;[m
+[31m-	private String rolesName;[m
+[31m-	[m
+[31m-	@ManyToOne[m
+[31m-	private User user;[m
+[31m-	[m
+[31m-	public Roles() {[m
+[31m-		super();[m
+[31m-		// TODO Auto-generated constructor stub[m
+[31m-	}[m
+[31m-	public Roles(Long id, String rolesName) {[m
+[31m-		super();[m
+[31m-		this.id = id;[m
+[31m-		this.rolesName = rolesName;[m
+[31m-	}[m
+[31m-	public Long getId() {[m
+[31m-		return id;[m
+[31m-	}[m
+[31m-	public void setId(Long id) {[m
+[31m-		this.id = id;[m
+[31m-	}[m
+[31m-	public String getRolesName() {[m
+[31m-		return rolesName;[m
+[31m-	}[m
+[31m-	public void setRolesName(String rolesName) {[m
+[31m-		this.rolesName = rolesName;[m
+[31m-	}[m
+[31m-	[m
+[32m+[m[32m    private Long id;[m
+[32m+[m[41m    [m
+[32m+[m[32m    private String name;  // यह फील्ड सही है, क्योंकि हम इसे RolesRepository में इस्तेमाल कर रहे हैं[m
+[32m+[m[41m    [m
+[32m+[m[32m    @ManyToOne(fetch = FetchType.EAGER)[m
+[32m+[m[32m    @JoinColumn(name = "user_id")[m
+[32m+[m[32m    private User user;[m
+[32m+[m
+[32m+[m[32m    public Roles() {[m
+[32m+[m[32m        super();[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m    public Roles(Long id, String name, User user) {[m
+[32m+[m[32m        super();[m
+[32m+[m[32m        this.id = id;[m
+[32m+[m[32m        this.name = name;[m
+[32m+[m[32m        this.user = user;[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m    public Roles(String name) {  // एक कंस्ट्रक्टर जो केवल rolesName को लेता है[m
+[32m+[m[32m        super();[m
+[32m+[m[32m        this.name = name;[m
+[32m+[m[32m    }[m
+ [m
+[32m+[m[32m    // Getters and setters[m
+[32m+[m[32m    public Long getId() {[m
+[32m+[m[32m        return id;[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m    public void setId(Long id) {[m
+[32m+[m[32m        this.id = id;[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m    public String getname() {[m
+[32m+[m[32m        return name;[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m    public void setname(String name) {[m
+[32m+[m[32m        this.name = name;[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m    public User getUser() {[m
+[32m+[m[32m        return user;[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m    public void setUser(User user) {[m
+[32m+[m[32m        this.user = user;[m
+[32m+[m[32m    }[m
+[32m+[m[41m	[m
+ 	[m
+ }[m
+[1mdiff --git a/Rmm/src/main/java/com/ids/argus/model/User.java b/Rmm/src/main/java/com/ids/argus/model/User.java[m
+[1mindex 229b845..874c966 100644[m
+[1m--- a/Rmm/src/main/java/com/ids/argus/model/User.java[m
+[1m+++ b/Rmm/src/main/java/com/ids/argus/model/User.java[m
+[36m@@ -21,21 +21,20 @@[m [mpublic class User {[m
+ [m
+ 	 @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)[m
+ 	  private Set<Roles> roles;[m
+[31m-	[m
+[31m-	 [m
+[31m-	[m
+[32m+[m
+ 	public User() {[m
+ 		super();[m
+ 		// TODO Auto-generated constructor stub[m
+ 	}[m
+ [m
+[31m-	public User(Long id, String userName, String emailId, String password, String resetPassword) {[m
+[32m+[m	[32mpublic User(Long id, String userName, String emailId, String password, String resetPassword, Set<Roles> roles) {[m
+ 		super();[m
+ 		this.id = id;[m
+ 		this.userName = userName;[m
+ 		this.emailId = emailId;[m
+ 		this.password = password;[m
+ 		this.resetPassword = resetPassword;[m
+[32m+[m		[32mthis.roles = roles;[m
+ 	}[m
+ [m
+ 	public Long getId() {[m
+[36m@@ -70,14 +69,22 @@[m [mpublic class User {[m
+ 		this.password = password;[m
+ 	}[m
+ [m
+[31m-	public String getresetPassword() {[m
+[32m+[m	[32mpublic String getResetPassword() {[m
+ 		return resetPassword;[m
+ 	}[m
+ [m
+[31m-	public void setresetPassword(String resetPassword) {[m
+[32m+[m	[32mpublic void setResetPassword(String resetPassword) {[m
+ 		this.resetPassword = resetPassword;[m
+ 	}[m
+[32m+[m
+[32m+[m	[32mpublic Set<Roles> getRoles() {[m
+[32m+[m		[32mreturn roles;[m
+[32m+[m	[32m}[m
+[32m+[m
+[32m+[m	[32mpublic void setRoles(Set<Roles> roles) {[m
+[32m+[m		[32mthis.roles = roles;[m
+[32m+[m	[32m}[m
+[32m+[m[41m	 [m
+[32m+[m[41m	 [m
+ 	[m
+[31m-	[m
+[31m-	[m
+[31m-}[m
+[32m+[m[32m}[m
+\ No newline at end of file[m
+[1mdiff --git a/Rmm/src/main/java/com/ids/argus/services/RolesServicesImpl.java b/Rmm/src/main/java/com/ids/argus/services/RolesServicesImpl.java[m
+[1mindex 5567ed2..0bee06f 100644[m
+[1m--- a/Rmm/src/main/java/com/ids/argus/services/RolesServicesImpl.java[m
+[1m+++ b/Rmm/src/main/java/com/ids/argus/services/RolesServicesImpl.java[m
+[36m@@ -40,7 +40,7 @@[m [mpublic class RolesServicesImpl implements RolesServices{[m
+ 	public RolesDto crete(RolesDto rolesDto) {[m
+ 		Roles savedRoles=new Roles();[m
+ 		savedRoles.setId(rolesDto.getId());[m
+[31m-		savedRoles.setRolesName(rolesDto.getRolesName());[m
+[32m+[m		[32msavedRoles.setname(rolesDto.getName());[m
+ 		[m
+ 		Roles saved=repository.save(savedRoles);[m
+ 		return new RolesDto().toDo(saved);[m
+[36m@@ -52,7 +52,7 @@[m [mpublic class RolesServicesImpl implements RolesServices{[m
+ 				orElseThrow(() -> new RuntimeException("Roles not found with id"+ id));[m
+ 		[m
+ 		exisitingRoles.setId(rolesDto.getId());[m
+[31m-		exisitingRoles.setRolesName(rolesDto.getRolesName());[m
+[32m+[m		[32mexisitingRoles.setname(rolesDto.getName());[m
+ 		[m
+ 		Roles savedRoles=repository.save(exisitingRoles);[m
+ 		return new RolesDto().toDo(savedRoles);[m
+[1mdiff --git a/Rmm/src/main/java/com/ids/argus/services/UserServicesImpl.java b/Rmm/src/main/java/com/ids/argus/services/UserServicesImpl.java[m
+[1mindex ec103a0..94aa186 100644[m
+[1m--- a/Rmm/src/main/java/com/ids/argus/services/UserServicesImpl.java[m
+[1m+++ b/Rmm/src/main/java/com/ids/argus/services/UserServicesImpl.java[m
+[36m@@ -1,6 +1,7 @@[m
+ package com.ids.argus.services;[m
+ [m
+ import java.util.Set;[m
+[32m+[m[32mimport java.util.stream.Collectors;[m
+ [m
+ import org.springframework.security.crypto.password.PasswordEncoder;[m
+ import org.springframework.stereotype.Service;[m
+[36m@@ -19,55 +20,67 @@[m [mimport jakarta.transaction.Transactional;[m
+ @Transactional[m
+ public class UserServicesImpl implements UserServices{[m
+ 	[m
+[31m-	    private final UserRepository userRepository;[m
+[31m-	    private final PasswordEncoder passwordEncoder;[m
+[31m-	    private final RolesRepository rolesRepository;[m
+[31m-[m
+[31m-	    public UserServicesImpl(UserRepository userRepository, PasswordEncoder passwordEncoder,RolesRepository rolesRepository) {[m
+[31m-	        this.userRepository = userRepository;[m
+[31m-	        this.passwordEncoder = passwordEncoder;[m
+[31m-	        this.rolesRepository=rolesRepository;[m
+[31m-	    }[m
+[31m-[m
+[31m-	    @Override[m
+[31m-	    public UserDto registerUser(RegisterRequest registerRequest) {[m
+[31m-	    	[m
+[31m-	    	if(userRepository.findByEmailId(registerRequest.getEmailId()).isPresent()) {[m
+[31m-	    		throw new RuntimeException("Email is already registered");[m
+[31m-	    	}[m
+[31m-	        [m
+[31m-	        String encodedPassword = passwordEncoder.encode(registerRequest.getPassword());[m
+[31m-[m
+[31m-	        [m
+[31m-	        User users = new User();[m
+[31m-	        users.setUserName(registerRequest.getUserName());[m
+[31m-	        users.setEmailId(registerRequest.getEmailId());[m
+[31m-	        users.setPassword(encodedPassword);[m
+[31m-	        users.setresetPassword(registerRequest.getresetPassword());[m
+[31m-	        [m
+[31m-	        Set<Roles> roles = registerRequest.getRoles().stream()[m
+[31m-	                .map(role -> roleRepository.findByName(role.getRolesName())[m
+[31m-	                        .orElseThrow(() -> new RuntimeException("Role not found: " + role.getRolesName())))[m
+[31m-	                .collect(Collectors.toSet());[m
+[31m-	        user.setRoles(roles);[m
+[31m-[m
+[31m-	        User savedUser = userRepository.save(users);[m
+[31m-[m
+[31m-	        return new UserDto(savedUser.getPassword(), savedUser.getEmailId());[m
+[31m-	    }[m
+[31m-[m
+[31m-	    @Override[m
+[31m-	    public UserDto loginUser(LoginRequest loginRequest) {[m
+[31m-	        [m
+[31m-	        User user = userRepository.findByEmailId(loginRequest.getEmailId())[m
+[31m-	                .orElseThrow(() -> new RuntimeException("User not found"));[m
+[31m-[m
+[31m-	        [m
+[31m-	        if (!passwordEncoder.matches(loginRequest.getPassword(), user.getPassword())) {[m
+[31m-	            throw new RuntimeException("Invalid credentials");[m
+[31m-	        }[m
+[31m-[m
+[31m-	        [m
+[31m-	        return new UserDto(user.getEmailId(), user.getPassword());[m
+[31m-	    }[m
+[32m+[m	[32mprivate final UserRepository userRepository;[m
+[32m+[m[32m    private final PasswordEncoder passwordEncoder;[m
+[32m+[m[32m    private final RolesRepository rolesRepository;[m
+[32m+[m
+[32m+[m[32m    public UserServicesImpl(UserRepository userRepository, PasswordEncoder passwordEncoder, RolesRepository rolesRepository) {[m
+[32m+[m[32m        this.userRepository = userRepository;[m
+[32m+[m[32m        this.passwordEncoder = passwordEncoder;[m
+[32m+[m[32m        this.rolesRepository = rolesRepository;[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m    @Override[m
+[32m+[m[32m    public UserDto registerUser(RegisterRequest registerRequest) {[m
+[32m+[m
+[32m+[m[32m        // Check if the user already exists[m
+[32m+[m[32m        if (userRepository.findByEmailId(registerRequest.getEmailId()).isPresent()) {[m
+[32m+[m[32m            throw new RuntimeException("User with this email already exists");[m
+[32m+[m[32m        }[m
+[32m+[m
+[32m+[m[32m        // Encode password[m
+[32m+[m[32m        String encodedPassword = passwordEncoder.encode(registerRequest.getPassword());[m
+[32m+[m
+[32m+[m[32m        // Create a new user object[m
+[32m+[m[32m        User user = new User();[m
+[32m+[m[32m        user.setUserName(registerRequest.getUserName());[m
+[32m+[m[32m        user.setEmailId(registerRequest.getEmailId());[m
+[32m+[m[32m        user.setPassword(encodedPassword);[m
+[32m+[m[32m        user.setResetPassword(registerRequest.getresetPassword());[m
+[32m+[m
+[32m+[m[32m        // Map RolesDto to Roles and save them[m
+[32m+[m[32m        Set<Roles> roles = registerRequest.getRoles().stream().map(roleDto -> {[m
+[32m+[m[32m            // Check if the role exists, otherwise create a new one[m
+[32m+[m[32m            Roles role = rolesRepository.findByName(roleDto.getName())[m
+[32m+[m[32m                    .orElse(new Roles(roleDto.getName())); // If role not found, create new one[m
+[32m+[m[32m            role.setname(roleDto.getName());  // Update rolesName[m
+[32m+[m[32m            return role;[m
+[32m+[m[32m        }).collect(Collectors.toSet());[m
+[32m+[m
+[32m+[m[32m        // Set roles to the user[m
+[32m+[m[32m        user.setRoles(roles);[m
+[32m+[m
+[32m+[m[32m        // Save the user object[m
+[32m+[m[32m        User savedUser = userRepository.save(user);[m
+[32m+[m
+[32m+[m[32m        // Convert saved user to UserDto and return[m
+[32m+[m[32m        return new UserDto().toDo(savedUser);[m[41m [m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m    @Override[m
+[32m+[m[32m    public UserDto loginUser(LoginRequest loginRequest) {[m
+[32m+[m
+[32m+[m[32m        // Find user by email[m
+[32m+[m[32m        User user = userRepository.findByEmailId(loginRequest.getEmailId())[m
+[32m+[m[32m                .orElseThrow(() -> new RuntimeException("User not found"));[m
+[32m+[m
+[32m+[m[32m        // Check password match[m
+[32m+[m[32m        if (!passwordEncoder.matches(loginRequest.getPassword(), user.getPassword())) {[m
+[32m+[m[32m            throw new RuntimeException("Invalid credentials");[m
+[32m+[m[32m        }[m
+[32m+[m
+[32m+[m[32m        // Return the user as UserDto[m
+[32m+[m[32m        return new UserDto().toDo(user);[m[41m [m
+[32m+[m[32m    }[m
+[32m+[m
+ }[m

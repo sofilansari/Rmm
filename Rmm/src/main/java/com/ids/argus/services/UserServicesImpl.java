@@ -1,6 +1,10 @@
 package com.ids.argus.services;
 
 import java.util.Set;
+<<<<<<< HEAD
+=======
+import java.util.stream.Collectors;
+>>>>>>> 6a53404616e5da8f0bb6bb61314fe3f121153b44
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -23,10 +27,17 @@ public class UserServicesImpl implements UserServices{
 	    private final PasswordEncoder passwordEncoder;
 	    private final RolesRepository rolesRepository;
 
+<<<<<<< HEAD
 	    public UserServicesImpl(UserRepository userRepository, PasswordEncoder passwordEncoder,RolesRepository rolesRepository) {
 	        this.userRepository = userRepository;
 	        this.passwordEncoder = passwordEncoder;
 	        this.rolesRepository=rolesRepository;
+=======
+	    public UserServicesImpl(UserRepository userRepository, PasswordEncoder passwordEncoder, RolesRepository rolesRepository) {
+	        this.userRepository = userRepository;
+	        this.passwordEncoder = passwordEncoder;
+	        this.rolesRepository = rolesRepository;
+>>>>>>> 6a53404616e5da8f0bb6bb61314fe3f121153b44
 	    }
 
 	    @Override
@@ -36,9 +47,12 @@ public class UserServicesImpl implements UserServices{
 	    		throw new RuntimeException("Email is already registered");
 	    	}
 	        
-	        String encodedPassword = passwordEncoder.encode(registerRequest.getPassword());
+	        if (userRepository.findByEmailId(registerRequest.getEmailId()).isPresent()) {
+	            throw new RuntimeException("User with email already exists");
+	        }
 
 	        
+<<<<<<< HEAD
 	        User users = new User();
 	        users.setUserName(registerRequest.getUserName());
 	        users.setEmailId(registerRequest.getEmailId());
@@ -50,10 +64,34 @@ public class UserServicesImpl implements UserServices{
 	                        .orElseThrow(() -> new RuntimeException("Role not found: " + role.getRolesName())))
 	                .collect(Collectors.toSet());
 	        user.setRoles(roles);
+=======
+	        String encodedPassword = passwordEncoder.encode(registerRequest.getPassword());
+>>>>>>> 6a53404616e5da8f0bb6bb61314fe3f121153b44
 
-	        User savedUser = userRepository.save(users);
+	       
+	        User user = new User();
+	        user.setUseName(registerRequest.getUseName());
+	        user.setEmailId(registerRequest.getEmailId());
+	        user.setPassword(encodedPassword);
+	        user.setResetPaaword(registerRequest.getResetPaaword());
 
-	        return new UserDto(savedUser.getPassword(), savedUser.getEmailId());
+	        
+	        Set<Roles> roles = registerRequest.getRoles().stream().map(roleDto -> {
+	            Roles role = new Roles();
+	            role.setRolesName(roleDto.getRolesName());
+	            role.setUser(user); 
+	            return rolesRepository.save(role); 
+	        }).collect(Collectors.toSet());
+
+	       
+	        user.setRoles(roles);
+
+	        
+	        User savedUser = userRepository.save(user);
+
+	        
+	        UserDto userDto = new UserDto();
+	        return userDto.toDo(savedUser);
 	    }
 
 	    @Override
@@ -68,6 +106,7 @@ public class UserServicesImpl implements UserServices{
 	        }
 
 	        
-	        return new UserDto(user.getEmailId(), user.getPassword());
+	        UserDto userDto = new UserDto();
+	        return userDto.toDo(user); 
 	    }
 }

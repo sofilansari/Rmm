@@ -1,12 +1,12 @@
 package com.ids.argus.model;
 import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 
 
@@ -26,27 +26,23 @@ public class Doctor extends BaseAuditable{
 	private String emailId;
 	private String alternativeEmailId;
 	
-	@OneToMany(fetch = FetchType.EAGER)
-	@JoinColumn(name="id")
+	@OneToMany(mappedBy = "doctor", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<Category>categories;
 	
-	@OneToMany
-	@JoinColumn(name="id")
+	@OneToMany(mappedBy = "doctor", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<Address>addresses;
 	
-	@OneToMany
-	@JoinColumn(name="id")
+	@OneToMany(mappedBy = "doctor", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<Contact>contacts;
-	
-	
-	
+
 	public Doctor() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
 	public Doctor(Long id, String type, String firstName, String lastName, String groupName, boolean state,
-			boolean isDelete, String speciality, String emailId, String alternativeEmailId) {
+			boolean isDelete, String speciality, String emailId, String alternativeEmailId, List<Category> categories,
+			List<Address> addresses, List<Contact> contacts) {
 		super();
 		this.id = id;
 		this.type = type;
@@ -58,6 +54,9 @@ public class Doctor extends BaseAuditable{
 		this.speciality = speciality;
 		this.emailId = emailId;
 		this.alternativeEmailId = alternativeEmailId;
+		this.categories = categories;
+		this.addresses = addresses;
+		this.contacts = contacts;
 	}
 
 	public Long getId() {
@@ -139,7 +138,31 @@ public class Doctor extends BaseAuditable{
 	public void setAlternativeEmailId(String alternativeEmailId) {
 		this.alternativeEmailId = alternativeEmailId;
 	}
-	
+
+	public List<Category> getCategories() {
+		return categories;
+	}
+
+	public void setCategories(List<Category> categories) {
+		this.categories = categories;
+	}
+
+	public List<Address> getAddresses() {
+		return addresses;
+	}
+
+	public void setAddresses(List<Address> addresses) {
+		this.addresses = addresses;
+	}
+
+	public List<Contact> getContacts() {
+		return contacts;
+	}
+
+	public void setContacts(List<Contact> contacts) {
+		this.contacts = contacts;
+	}
 
 	
+
 }

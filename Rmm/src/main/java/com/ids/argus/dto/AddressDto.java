@@ -6,7 +6,6 @@ public class AddressDto {
 	
 	private Long id;
     private String type;
-    private Long parentAddressId; // To avoid nested objects
     private String city;
     private String state;
     private String zipcode;
@@ -19,7 +18,6 @@ public class AddressDto {
         AddressDto dto = new AddressDto();
         dto.setId(address.getId());
         dto.setType(address.getType());
-        dto.setParentAddressId(address.getAddress() != null ? address.getAddress().getId() : null);
         dto.setCity(address.getCity());
         dto.setState(address.getState());
         dto.setZipcode(address.getZipcode());
@@ -42,14 +40,6 @@ public class AddressDto {
 
     public void setType(String type) {
         this.type = type;
-    }
-
-    public Long getParentAddressId() {
-        return parentAddressId;
-    }
-
-    public void setParentAddressId(Long parentAddressId) {
-        this.parentAddressId = parentAddressId;
     }
 
     public String getCity() {

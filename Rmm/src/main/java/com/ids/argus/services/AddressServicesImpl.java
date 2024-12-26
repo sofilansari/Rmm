@@ -46,13 +46,6 @@ public class AddressServicesImpl implements AddressServices{
         newAddress.setZipcode(addressDto.getZipcode());
         newAddress.setDeleted(addressDto.getIsDeleted());
 
-      
-        if (addressDto.getParentAddressId() != null) {
-            Address parentAddress = addressRepository.findById(addressDto.getParentAddressId())
-                    .orElseThrow(() -> new RuntimeException("Parent Address not found with id " + addressDto.getParentAddressId()));
-            newAddress.setAddress(parentAddress);
-        }
-
      
         Address savedAddress = addressRepository.save(newAddress);
 
@@ -70,14 +63,6 @@ public class AddressServicesImpl implements AddressServices{
         existingAddress.setState(addressDto.getState());
         existingAddress.setZipcode(addressDto.getZipcode());
         existingAddress.setDeleted(addressDto.getIsDeleted());
-
-        if (addressDto.getParentAddressId() != null) {
-            Address parentAddress = addressRepository.findById(addressDto.getParentAddressId())
-                    .orElseThrow(() -> new RuntimeException("Parent Address not found with id " + addressDto.getParentAddressId()));
-            existingAddress.setAddress(parentAddress);
-        } else {
-            existingAddress.setAddress(null); // Remove parent address if none is provided
-        }
 
         Address updatedAddress = addressRepository.save(existingAddress);
         return new AddressDto().toDo(updatedAddress);
