@@ -5,75 +5,73 @@ import com.ids.argus.model.Address;
 public class AddressDto {
 	
 	private Long id;
-    private String type;
-    private String city;
-    private String state;
-    private String zipcode;
-    private Boolean isDeleted;
+	 private String type;
+	    private String city;
+	    private String state;
+	    private String zipcode;
+	    private boolean deleted; // Keeping it as Boolean for consistency with the entity
 
-    public AddressDto toDo(Address address) {
-        if (address == null) {
-            return null;
-        }
-        AddressDto dto = new AddressDto();
-        dto.setId(address.getId());
-        dto.setType(address.getType());
-        dto.setCity(address.getCity());
-        dto.setState(address.getState());
-        dto.setZipcode(address.getZipcode());
-        dto.setIsDeleted(address.getDeleted());
-        return dto;
-    }
+   public AddressDto toDto(Address address) {
+	   
+	   AddressDto dto=new AddressDto();
+	   dto.setId(address.getId());
+	   dto.setState(address.getState());
+	   dto.setCity(address.getCity());
+	   dto.setType(address.getType());
+	   dto.setZipcode(address.getZipcode());
+	   dto.setDeleted(address.isDeleted());
+	   
+	return dto;
+	   
+   }
 
- 
-    public Long getId() {
-        return id;
-    }
+public Long getId() {
+	return id;
+}
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+public void setId(Long id) {
+	this.id = id;
+}
 
-    public String getType() {
-        return type;
-    }
+public String getType() {
+	return type;
+}
 
-    public void setType(String type) {
-        this.type = type;
-    }
+public void setType(String type) {
+	this.type = type;
+}
 
-    public String getCity() {
-        return city;
-    }
+public String getCity() {
+	return city;
+}
 
-    public void setCity(String city) {
-        this.city = city;
-    }
+public void setCity(String city) {
+	this.city = city;
+}
 
-    public String getState() {
-        return state;
-    }
+public String getState() {
+	return state;
+}
 
-    public void setState(String state) {
-        this.state = state;
-    }
+public void setState(String state) {
+	this.state = state;
+}
 
-    public String getZipcode() {
-        return zipcode;
-    }
+public String getZipcode() {
+	return zipcode;
+}
 
-    public void setZipcode(String zipcode) {
-        this.zipcode = zipcode;
-    }
+public void setZipcode(String zipcode) {
+	this.zipcode = zipcode;
+}
 
-    public Boolean getIsDeleted() {
-        return isDeleted;
-    }
+public boolean isDeleted() {
+	return deleted;
+}
 
-    public void setIsDeleted(Boolean isDeleted) {
-        this.isDeleted = isDeleted;
-    }
-    
-    
-
+public void setDeleted(boolean deleted) {
+	this.deleted = deleted;
+}
+   
+   
 }

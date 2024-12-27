@@ -25,7 +25,7 @@ public class AddressServicesImpl implements AddressServices{
 	@Override
 	public List<AddressDto> getAllAddress() {
 		List<Address>addressesOfList=addressRepository.findAll();
-		return addressesOfList.stream().map(address -> new AddressDto().toDo(address))
+		return addressesOfList.stream().map(address -> new AddressDto().toDto(address))
 				.collect(Collectors.toList());
 	}
 
@@ -33,7 +33,7 @@ public class AddressServicesImpl implements AddressServices{
 	public AddressDto findById(Long id) {
 		Address address=addressRepository.findById(id).
 				orElseThrow(()-> new RuntimeException("Address not found with id"+id));
-		return new AddressDto().toDo(address);
+		return new AddressDto().toDto(address);
 	}
 
 	@Override
@@ -44,12 +44,12 @@ public class AddressServicesImpl implements AddressServices{
         newAddress.setCity(addressDto.getCity());
         newAddress.setState(addressDto.getState());
         newAddress.setZipcode(addressDto.getZipcode());
-        newAddress.setDeleted(addressDto.getIsDeleted());
+        newAddress.setDeleted(addressDto.isDeleted());
 
      
         Address savedAddress = addressRepository.save(newAddress);
 
-        return new AddressDto().toDo(savedAddress);
+        return new AddressDto().toDto(savedAddress);
 	}
 
 	@Override
@@ -62,10 +62,10 @@ public class AddressServicesImpl implements AddressServices{
         existingAddress.setCity(addressDto.getCity());
         existingAddress.setState(addressDto.getState());
         existingAddress.setZipcode(addressDto.getZipcode());
-        existingAddress.setDeleted(addressDto.getIsDeleted());
+        existingAddress.setDeleted(addressDto.isDeleted());
 
         Address updatedAddress = addressRepository.save(existingAddress);
-        return new AddressDto().toDo(updatedAddress);
+        return new AddressDto().toDto(updatedAddress);
 	}
 
 	@Override

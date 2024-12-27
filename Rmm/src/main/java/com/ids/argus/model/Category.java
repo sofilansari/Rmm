@@ -22,19 +22,20 @@ public class Category extends BaseAuditable{
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="doctor_id")
 	private Doctor doctor;
-	
+
 	public Category() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public Category(Long id, String name, String stats, String type, boolean isDeleted) {
+	public Category(Long id, String name, String stats, String type, boolean isDeleted, Doctor doctor) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.stats = stats;
 		this.type = type;
 		this.isDeleted = isDeleted;
+		this.doctor = doctor;
 	}
 
 	public Long getId() {
@@ -77,6 +78,15 @@ public class Category extends BaseAuditable{
 		this.isDeleted = isDeleted;
 	}
 
+	public Doctor getDoctor() {
+		return doctor;
+	}
+
+	public void setDoctor(Doctor doctor) {
+		this.doctor = doctor;
+	}
+	
+	
 	
 
 }

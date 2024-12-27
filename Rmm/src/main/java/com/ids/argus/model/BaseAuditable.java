@@ -11,26 +11,27 @@ import jakarta.persistence.PreUpdate;
 @MappedSuperclass
 public class BaseAuditable {
 	
-		@OneToOne
-		@JoinColumn(name="id")
+	   @OneToOne
+	    @JoinColumn(name = "created_by_id")  // Column name adjusted for clarity
 	    private Users createBy;
 
 	    @OneToOne
-	    @JoinColumn(name="id")
+	    @JoinColumn(name = "modified_by_id") // Column name adjusted for clarity
 	    private Users modifiedBy;
 
 	    private LocalDateTime createOn;
-
 	    private LocalDateTime modifiedOn;
 
+	    // Automatically set createOn when the entity is created
 	    @PrePersist
 	    protected void onCreate() {
-	        this.createOn =  LocalDateTime.now(); // Automatically set current date on creation
+	        this.createOn = LocalDateTime.now();
 	    }
 
+	    // Automatically set modifiedOn when the entity is updated
 	    @PreUpdate
 	    protected void onUpdate() {
-	        this.modifiedOn =  LocalDateTime.now(); // Automatically set current date on update
+	        this.modifiedOn = LocalDateTime.now();
 	    }
 
 	    // Getters and Setters
@@ -65,5 +66,4 @@ public class BaseAuditable {
 	    public void setModifiedOn(LocalDateTime modifiedOn) {
 	        this.modifiedOn = modifiedOn;
 	    }
-
 }

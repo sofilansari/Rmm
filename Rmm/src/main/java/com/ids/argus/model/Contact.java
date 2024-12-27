@@ -21,43 +21,60 @@ public class Contact extends BaseAuditable{
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "doctor_id")
 	private Doctor doctor;
-	
+
 	public Contact() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public Contact(Long id, String type, String phoneNo, boolean isDeleted) {
+
+	public Contact(Long id, String type, String phoneNo, boolean isDeleted, Doctor doctor) {
 		super();
 		this.id = id;
 		this.type = type;
 		this.phoneNo = phoneNo;
 		this.isDeleted = isDeleted;
+		this.doctor = doctor;
 	}
+
 	public Long getId() {
 		return id;
 	}
+
 	public void setId(Long id) {
 		this.id = id;
 	}
+
 	public String getType() {
 		return type;
 	}
+
 	public void setType(String type) {
 		this.type = type;
 	}
+
 	public String getPhoneNo() {
 		return phoneNo;
 	}
+
 	public void setPhoneNo(String phoneNo) {
 		this.phoneNo = phoneNo;
 	}
+
 	public boolean isDeleted() {
 		return isDeleted;
 	}
+
 	public void setDeleted(boolean isDeleted) {
 		this.isDeleted = isDeleted;
 	}
-	
+
+	public Doctor getDoctor() {
+		return doctor;
+	}
+
+	public void setDoctor(Doctor doctor) {
+		this.doctor = doctor;
+	}
 	
 	
 }
