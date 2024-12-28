@@ -1,7 +1,6 @@
 package com.ids.argus.dto;
 
 import java.util.Set;
-import com.ids.argus.model.Roles;
 
 public class RegisterRequest {
 	
