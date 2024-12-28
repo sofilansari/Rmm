@@ -9,7 +9,7 @@ public class AddressDto {
 	    private String city;
 	    private String state;
 	    private String zipcode;
-	    private boolean deleted; // Keeping it as Boolean for consistency with the entity
+	    private boolean deleted; 
 
    public AddressDto toDto(Address address) {
 	   

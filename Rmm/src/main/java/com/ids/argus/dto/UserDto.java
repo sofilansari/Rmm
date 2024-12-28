@@ -9,6 +9,7 @@ public class UserDto {
 
 	    
 	    public UserDto toDo(User user) {
+	    	
 	        UserDto dto = new UserDto();
 	        dto.setPassword(user.getPassword()); 
 	        dto.setEmailId(user.getEmailId());

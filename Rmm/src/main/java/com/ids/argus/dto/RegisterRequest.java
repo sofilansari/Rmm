@@ -10,7 +10,7 @@ public class RegisterRequest {
 	private String password;
 	private String resetPassword;
 	
-	private Set<Roles>roles;
+	private Set<RolesDto>roles;
 
 	public String getUserName() {
 		return userName;
@@ -44,14 +44,14 @@ public class RegisterRequest {
 		this.resetPassword = resetPassword;
 	}
 
-	public Set<Roles> getRoles() {
+	public Set<RolesDto> getRoles() {
 		return roles;
 	}
 
-	public void setRoles(Set<Roles> roles) {
+	public void setRoles(Set<RolesDto> roles) {
 		this.roles = roles;
 	}
-	
+
 	
 
 }

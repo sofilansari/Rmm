@@ -1,8 +1,8 @@
 package com.ids.argus.model;
-import java.util.Set;
 
-import jakarta.persistence.CascadeType;
+import java.util.Set;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -14,13 +14,16 @@ public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+
     private String userName;
     private String emailId;
     private String password;
     private String resetPassword;
 
-	 @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-	  private Set<Roles> roles;
+    // One user can have multiple roles
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER) // mappedBy indicates the other side of the relationship in the Role entity
+    private Set<Roles> roles;
+
 
 	public User() {
 		super();

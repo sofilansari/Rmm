@@ -8,16 +8,18 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 
 @Entity
-public class Roles extends BaseAuditable{
+public class Roles {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	private String rolesName;
-	
-	@ManyToOne
-	 @JoinColumn(name = "user_id")
-	private User user;
+
+    private String rolesName;
+
+    // Many roles can be assigned to one user
+    @ManyToOne
+    @JoinColumn(name = "user_id") // Foreign key in the Roles table
+    private User user;
 
 	public Roles() {
 		super();

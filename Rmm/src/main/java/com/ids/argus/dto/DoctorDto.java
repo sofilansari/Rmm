@@ -12,7 +12,7 @@ public class DoctorDto {
 	    private String lastName;
 	    private String groupName;
 	    private boolean state;
-	    private boolean isDeleted;  // Renamed for clarity
+	    private boolean isDeleted;  
 	    private String speciality;
 	    private String emailId;
 	    private String alternativeEmailId;
@@ -20,8 +20,8 @@ public class DoctorDto {
 	    private List<AddressDto> addresses;
 	    private List<ContactDto> contacts;
 
-	    // Method to convert Doctor entity to DoctorDto
-	    public DoctorDto toDto(Doctor doctor) {  // Rename method to toDto for clarity
+	    
+	    public DoctorDto toDto(Doctor doctor) {  
 	        DoctorDto dto = new DoctorDto();
 	        dto.setId(doctor.getId());
 	        dto.setType(doctor.getType());
@@ -29,34 +29,34 @@ public class DoctorDto {
 	        dto.setLastName(doctor.getLastName());
 	        dto.setGroupName(doctor.getGroupName());
 	        dto.setState(doctor.isState());
-	        dto.setDeleted(doctor.isDelete());  // Fix the mapping to isDeleted() instead of isDelete()
+	        dto.setDeleted(doctor.isDelete());  
 	        dto.setSpeciality(doctor.getSpeciality());
 	        dto.setEmailId(doctor.getEmailId());
 	        dto.setAlternativeEmailId(doctor.getAlternativeEmailId());
 
-	        // Mapping related entities to DTOs
+	        
 	        if (doctor.getCategories() != null) {
 	            dto.setCategories(doctor.getCategories().stream()
-	                .map(category -> new CategoryDto().toDo(category))  // Assume CategoryDto has toDto method
+	                .map(category -> new CategoryDto().toDo(category))  
 	                .collect(Collectors.toList()));
 	        }
 
 	        if (doctor.getAddresses() != null) {
 	            dto.setAddresses(doctor.getAddresses().stream()
-	                .map(address -> new AddressDto().toDto(address))  // Assume AddressDto has toDto method
+	                .map(address -> new AddressDto().toDto(address))  
 	                .collect(Collectors.toList()));
 	        }
 
 	        if (doctor.getContacts() != null) {
 	            dto.setContacts(doctor.getContacts().stream()
-	                .map(contact -> new ContactDto().toDo(contact))  // Assume ContactDto has toDto method
+	                .map(contact -> new ContactDto().toDo(contact))  
 	                .collect(Collectors.toList()));
 	        }
 
 	        return dto;
 	    }
 
-	    // Getters and Setters
+	   
 	    public Long getId() {
 	        return id;
 	    }

@@ -18,17 +18,18 @@ public class AuthController {
 	
 	private final UserServices userServices;
 
-    
     public AuthController(UserServices userServices) {
         this.userServices = userServices;
     }
 
+    // Register user
     @PostMapping("/signup")
     public ResponseEntity<UserDto> registerUser(@RequestBody RegisterRequest registerRequest) {
         UserDto userDto = userServices.registerUser(registerRequest);
-        return ResponseEntity.ok(userDto);  
+        return ResponseEntity.ok(userDto);
     }
 
+    // Login user and generate JWT token
     @PostMapping("/login")
     public ResponseEntity<?> loginUser(@RequestBody LoginRequest loginRequest) {
         UserDto userDto = userServices.loginUser(loginRequest);
@@ -37,8 +38,11 @@ public class AuthController {
             return ResponseEntity.badRequest().body("Invalid email or password");
         }
 
+        // Generate JWT token
         String token = JwtUtil.generateToken(userDto.getEmailId());
-        return ResponseEntity.ok(new JwtResponse(token, userDto));
-    }
 
+        // Return token and user information
+        JwtResponse jwtResponse = new JwtResponse(token, userDto);
+        return ResponseEntity.ok(jwtResponse);
+    }
 }
