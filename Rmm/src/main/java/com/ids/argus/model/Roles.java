@@ -13,6 +13,7 @@ public class Roles {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+<<<<<<< HEAD
 
     private String rolesName;
 
@@ -20,6 +21,13 @@ public class Roles {
     @ManyToOne
     @JoinColumn(name = "user_id") // Foreign key in the Roles table
     private User user;
+=======
+	private String rolesName;
+	
+	@ManyToOne
+	@JoinColumn(name="user_id")
+	private User user;
+>>>>>>> 77ff4358526ff82ab85ece956cb3cdda6d43ad79
 
 	public Roles() {
 		super();
