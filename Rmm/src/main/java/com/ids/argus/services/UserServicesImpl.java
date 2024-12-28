@@ -7,7 +7,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.ids.argus.dto.LoginRequest;
-import com.ids.argus.dto.RegisterRequest;
 import com.ids.argus.dto.UserDto;
 import com.ids.argus.model.Roles;
 import com.ids.argus.model.User;
@@ -20,50 +19,66 @@ import jakarta.transaction.Transactional;
 @Transactional
 public class UserServicesImpl implements UserServices{
 	
-	private final UserRepository userRepository;
-    private final PasswordEncoder passwordEncoder;
-    private final RolesRepository rolesRepository;
+	   private final UserRepository userRepository;
+	    private final PasswordEncoder passwordEncoder;
+	    private final RolesRepository rolesRepository;
 
-    public UserServicesImpl(UserRepository userRepository, PasswordEncoder passwordEncoder, RolesRepository rolesRepository) {
-        this.userRepository = userRepository;
-        this.passwordEncoder = passwordEncoder;
-        this.rolesRepository = rolesRepository;
-    }
+	    public UserServicesImpl(UserRepository userRepository, PasswordEncoder passwordEncoder, RolesRepository rolesRepository) {
+	        this.userRepository = userRepository;
+	        this.passwordEncoder = passwordEncoder;
+	        this.rolesRepository = rolesRepository;
+	    }
 
-    @Override
-    public UserDto registerUser(RegisterRequest registerRequest) {
-    	
-    	 if (userRepository.findByEmailId(registerRequest.getEmailId()).isPresent()) {
-    	        throw new RuntimeException("Email is already registered");
-    	    }
+	    @Override
+	    public UserDto registerUser(UserDto userDto) {
+	        
+	       
+	    	if (userRepository.findByEmailId(userDto.getEmailId()).isPresent()) {
+	            throw new RuntimeException("Email is already registered");
+	        }
 
-    	    User users = new User();
-    	    users.setUserName(registerRequest.getUserName());
-    	    users.setEmailId(registerRequest.getEmailId());
-    	    users.setPassword(passwordEncoder.encode(registerRequest.getPassword()));
-    	    users.setResetPassword(registerRequest.getResetPassword());
+	        // Create the user
+	        User user = new User();
+	        user.setUserName(userDto.getUserName());
+	        user.setEmailId(userDto.getEmailId());
+	        user.setPassword(passwordEncoder.encode(userDto.getPassword()));
+	        user.setResetPassword(userDto.getResetPassword());
+	        
+	        
 
-    	    Set<Roles> roles = registerRequest.getRoles().stream()
-    	            .map(roleDto -> rolesRepository.findByRolesName(roleDto.getRolesName()) 
-    	                .orElseThrow(() -> new RuntimeException("Role not found: " + roleDto.getRolesName())))
-    	            .collect(Collectors.toSet());
-    	        users.setRoles(roles);
+	        // Map roles and ensure each role has the user set before saving
+	        Set<Roles> roles = userDto.getRoles().stream()
+	                .map(rolesDto -> {
+	                    Roles role = rolesRepository.findByRolesName(rolesDto.getRolesName())
+	                            .orElseGet(() -> {
+	                                Roles newRole = new Roles();
+	                                newRole.setId(rolesDto.getId());
+	                                newRole.setRolesName(rolesDto.getRolesName());
+	                                return rolesRepository.save(newRole);
+	                            });
+	                    role.setUser(user);  // Set the user for the role before saving
+	                    return role;
+	                })
+	                .collect(Collectors.toSet());
 
-    	        User savedUser = userRepository.save(users);
+	        // Set roles for the user
+	        user.setRoles(roles);
 
-    	        return new UserDto().toDo(savedUser);
-    }
+	        // Save the user with roles
+	        User savedUser = userRepository.save(user);
 
-    @Override
-    public UserDto loginUser(LoginRequest loginRequest) {
-        User user = userRepository.findByEmailId(loginRequest.getEmailId())
-                .orElseThrow(() -> new RuntimeException("User not found"));
+	        return new UserDto().toDo(savedUser);
+	    }
 
-        if (!passwordEncoder.matches(loginRequest.getPassword(), user.getPassword())) {
-            throw new RuntimeException("Invalid credentials");
-        }
+	    @Override
+	    public UserDto loginUser(LoginRequest loginRequest) {
+	        User user = userRepository.findByEmailId(loginRequest.getEmailId())
+	                .orElseThrow(() -> new RuntimeException("User not found"));
 
-        
-        return new UserDto().toDo(user);
-    }
+	        if (!passwordEncoder.matches(loginRequest.getPassword(), user.getPassword())) {
+	            throw new RuntimeException("Invalid credentials");
+	        }
+
+	        return new UserDto().toDo(user);  
+	    }
 }

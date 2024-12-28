@@ -2,12 +2,14 @@ package com.ids.argus.model;
 import java.util.List;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 
 
 @Entity
@@ -21,12 +23,13 @@ public class Doctor extends BaseAuditable{
 	private String lastName;
 	private String groupName;
 	private boolean state;
-	private boolean isDelete;
+	@Column(name = "is_deleted")
+	private boolean deleted;
 	private String speciality;
 	private String emailId;
 	private String alternativeEmailId;
 	
-	@OneToMany(mappedBy = "doctor", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "doctor", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Category>categories;
 	
 	@OneToMany(mappedBy = "doctor", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
@@ -41,7 +44,7 @@ public class Doctor extends BaseAuditable{
 	}
 
 	public Doctor(Long id, String type, String firstName, String lastName, String groupName, boolean state,
-			boolean isDelete, String speciality, String emailId, String alternativeEmailId, List<Category> categories,
+			boolean deleted, String speciality, String emailId, String alternativeEmailId, List<Category> categories,
 			List<Address> addresses, List<Contact> contacts) {
 		super();
 		this.id = id;
@@ -50,7 +53,7 @@ public class Doctor extends BaseAuditable{
 		this.lastName = lastName;
 		this.groupName = groupName;
 		this.state = state;
-		this.isDelete = isDelete;
+		this.deleted = deleted;
 		this.speciality = speciality;
 		this.emailId = emailId;
 		this.alternativeEmailId = alternativeEmailId;
@@ -107,12 +110,12 @@ public class Doctor extends BaseAuditable{
 		this.state = state;
 	}
 
-	public boolean isDelete() {
-		return isDelete;
+	public boolean isDeleted() {
+		return deleted;
 	}
 
-	public void setDelete(boolean isDelete) {
-		this.isDelete = isDelete;
+	public void setDeleted(boolean deleted) {
+		this.deleted = deleted;
 	}
 
 	public String getSpeciality() {

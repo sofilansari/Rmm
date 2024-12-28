@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ids.argus.dto.JwtResponse;
 import com.ids.argus.dto.LoginRequest;
-import com.ids.argus.dto.RegisterRequest;
 import com.ids.argus.dto.UserDto;
 import com.ids.argus.security.JwtUtil;
 import com.ids.argus.services.UserServices;
@@ -18,27 +17,21 @@ public class AuthController {
 	
 	private final UserServices userServices;
 
-    
     public AuthController(UserServices userServices) {
         this.userServices = userServices;
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<UserDto> registerUser(@RequestBody RegisterRequest registerRequest) {
-        UserDto userDto = userServices.registerUser(registerRequest);
-        return ResponseEntity.ok(userDto);  
+    public ResponseEntity<UserDto> registerUser(@RequestBody UserDto userDto) {
+        UserDto userDto1 = userServices.registerUser(userDto);
+        return ResponseEntity.ok(userDto1);  
     }
 
     @PostMapping("/login")
     public ResponseEntity<?> loginUser(@RequestBody LoginRequest loginRequest) {
         UserDto userDto = userServices.loginUser(loginRequest);
 
-        if (userDto == null) {
-            return ResponseEntity.badRequest().body("Invalid email or password");
-        }
-
         String token = JwtUtil.generateToken(userDto.getEmailId());
         return ResponseEntity.ok(new JwtResponse(token, userDto));
     }
-
 }

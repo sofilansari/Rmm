@@ -4,6 +4,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import com.ids.argus.dto.AddressDto;
+import com.ids.argus.dto.CategoryDto;
+import com.ids.argus.dto.ContactDto;
 import com.ids.argus.dto.DoctorDto;
 import com.ids.argus.model.Address;
 import com.ids.argus.model.Category;
@@ -46,68 +50,64 @@ public class DoctorServicesImpl implements DoctorServices{
 
 	    @Override
 	    public DoctorDto create(DoctorDto doctorDto) {
-	        Doctor doctor = new Doctor();
-	        doctor.setType(doctorDto.getType());
-	        doctor.setFirstName(doctorDto.getFirstName());
-	        doctor.setLastName(doctorDto.getLastName());
-	        doctor.setGroupName(doctorDto.getGroupName());
-	        doctor.setState(doctorDto.isState());
-	        doctor.setSpeciality(doctorDto.getSpeciality());
-	        doctor.setEmailId(doctorDto.getEmailId());
-	        doctor.setAlternativeEmailId(doctorDto.getAlternativeEmailId());
-	        doctor.setDelete(doctorDto.isDeleted());
+	    	
+	    	 Doctor doctor = new Doctor();
+	         doctor.setId(doctorDto.getId());
+	         doctor.setType(doctorDto.getType());
+	         doctor.setFirstName(doctorDto.getFirstName());
+	         doctor.setLastName(doctorDto.getLastName());
+	         doctor.setGroupName(doctorDto.getGroupName());
+	         doctor.setState(doctorDto.isState());
+	         doctor.setDeleted(doctorDto.isDelete());
+	         doctor.setSpeciality(doctorDto.getSpeciality());
+	         doctor.setEmailId(doctorDto.getEmailId());
+	         doctor.setAlternativeEmailId(doctorDto.getAlternativeEmailId());
 
-	        // Saving related entities (Categories, Addresses, Contacts)
-	        if (doctorDto.getCategories() != null) {
-	            List<Category> categories = doctorDto.getCategories().stream()
-	                    .map(categoryDto -> {
-	                        Category category = new Category();
-	                        category.setName(categoryDto.getName());
-	                        category.setStats(categoryDto.getStats());
-	                        category.setDeleted(categoryDto.isDeteled());
-	                        return category;
-	                    })
-	                    .collect(Collectors.toList());
-	            categoryRepository.saveAll(categories); // Save categories
-	            doctor.setCategories(categories); // Associate with doctor
-	        }
+	         // Save categories
+	         if (doctorDto.getCategories() != null) {
+	             for (CategoryDto categoryDto : doctorDto.getCategories()) {
+	                 Category category = new Category();
+	                 category.setName(categoryDto.getName());
+	                 category.setType(categoryDto.getType());
+	                 category.setStats(categoryDto.getStats());
+	                 category.setDoctor(doctor);  // Set doctor reference
+	                 categoryRepository.save(category);  // Save category to DB
+	             }
+	         }
 
-	        if (doctorDto.getAddresses() != null) {
-	            List<Address> addresses = doctorDto.getAddresses().stream()
-	                    .map(addressDto -> {
-	                        Address address = new Address();
-	                        address.setType(addressDto.getType());
-	                        address.setCity(addressDto.getCity());
-	                        address.setState(addressDto.getState());
-	                        address.setZipcode(addressDto.getZipcode());
-	                        address.setDeleted(addressDto.isDeleted());
-	                        return address;
-	                    })
-	                    .collect(Collectors.toList());
-	            addressRepository.saveAll(addresses); // Save addresses
-	            doctor.setAddresses(addresses); // Associate with doctor
-	        }
+	         // Save addresses
+	         if (doctorDto.getAddresses() != null) {
+	             for (AddressDto addressDto : doctorDto.getAddresses()) {
+	                 Address address = new Address();
+	                 address.setType(addressDto.getType());  // Assuming AddressDto has 'type' property
+	                 address.setZipcode(addressDto.getZipcode());
+	                 address.setCity(addressDto.getCity());
+	                 address.setState(addressDto.getState());
+	                 address.setDeleted(addressDto.isDeleted());
+	                 address.setDoctor(doctor);  // Set doctor reference
+	                 addressRepository.save(address);  // Save address to DB
+	             }
+	         }
 
-	        if (doctorDto.getContacts() != null) {
-	            List<Contact> contacts = doctorDto.getContacts().stream()
-	                    .map(contactDto -> {
-	                        Contact contact = new Contact();
-	                        contact.setType(contactDto.getType());
-	                        contact.setPhoneNo(contactDto.getPhoneNo());
-	                        contact.setDeleted(contactDto.isDeleted());
-	                        return contact;
-	                    })
-	                    .collect(Collectors.toList());
-	            contactRepository.saveAll(contacts); // Save contacts
-	            doctor.setContacts(contacts); // Associate with doctor
-	        }
+	         // Save contacts
+	         if (doctorDto.getContacts() != null) {
+	             for (ContactDto contactDto : doctorDto.getContacts()) {
+	                 Contact contact = new Contact();
+	                 contact.setPhoneNo(contactDto.getPhoneNo());  // Assuming ContactDto has 'phoneNumber'
+	                 contact.setType(contactDto.getType());
+	                 contact.setDeleted(contactDto.isDeleted());
+	                 contact.setDoctor(doctor);  // Set doctor reference
+	                 contactRepository.save(contact);  // Save contact to DB
+	             }
+	         }
 
-	        // Save the Doctor entity
-	        doctor = doctorRepository.save(doctor);
+	         // Save doctor entity
+	         Doctor savedDoctor = doctorRepository.save(doctor);
 
-	        // Convert saved Doctor entity back to DTO
-	        return new DoctorDto().toDto(doctor);
-	    }
+	         // Convert the saved Doctor entity back to DoctorDto and return
+	         return new DoctorDto().toDto(savedDoctor); // Using the toDto method to return the saved doctor as DTO
+	         
+	     	    }
 
 	    @Override
 	    public void delete(Long id) {
@@ -129,7 +129,7 @@ public class DoctorServicesImpl implements DoctorServices{
 	        existingDoctor.setSpeciality(doctorDto.getSpeciality());
 	        existingDoctor.setEmailId(doctorDto.getEmailId());
 	        existingDoctor.setAlternativeEmailId(doctorDto.getAlternativeEmailId());
-	        existingDoctor.setDelete(doctorDto.isDeleted());
+	        existingDoctor.setDeleted(doctorDto.isDelete());
 
 	        // Update related entities (Categories, Addresses, Contacts)
 	        if (doctorDto.getCategories() != null) {
