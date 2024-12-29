@@ -131,8 +131,7 @@ public class DoctorServicesImpl implements DoctorServices{
 	        existingDoctor.setEmailId(doctorDto.getEmailId());
 	        existingDoctor.setAlternativeEmailId(doctorDto.getAlternativeEmailId());
 	        existingDoctor.setDeleted(doctorDto.isDeleted());
-
-	        	       
+	       
 	        existingDoctor = doctorRepository.save(existingDoctor);
 
 	        

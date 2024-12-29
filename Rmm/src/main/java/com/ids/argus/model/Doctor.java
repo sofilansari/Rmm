@@ -159,9 +159,6 @@ public class Doctor extends BaseAuditable{
 
 	public void setCategories(List<Category> categories) {
 		this.categories = categories;
-	}
-
-		
-	
+	}	
 	
 }

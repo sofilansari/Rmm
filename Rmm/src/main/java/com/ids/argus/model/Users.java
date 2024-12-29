@@ -1,9 +1,13 @@
 package com.ids.argus.model;
 
+import java.util.List;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 
 @Entity
 public class Users extends BaseAuditable{
@@ -20,6 +24,15 @@ public class Users extends BaseAuditable{
 	private String address;
 	private int states;
 	private boolean isDelete;
+	
+	@OneToMany(mappedBy = "users", cascade = CascadeType.ALL,orphanRemoval = true)
+	private List<Task>tasks;
+	
+	@OneToMany(mappedBy = "users" ,cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<Contact>contacts;
+	
+	@OneToMany(mappedBy = "users" ,cascade = CascadeType.ALL)
+	private List<Address>addresses;
 	
 	public Users() {
 		super();

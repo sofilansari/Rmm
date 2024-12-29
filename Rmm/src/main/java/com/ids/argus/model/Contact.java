@@ -24,6 +24,10 @@ public class Contact extends BaseAuditable{
     @ManyToOne
     @JoinColumn(name = "doctor_id")
     private Doctor doctor;
+    
+    @ManyToOne
+    @JoinColumn(name = "users_id")
+    private Users users;
 
 
     public Contact() {
