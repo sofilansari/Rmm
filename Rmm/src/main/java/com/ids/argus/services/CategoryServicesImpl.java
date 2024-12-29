@@ -41,7 +41,7 @@ public class CategoryServicesImpl implements CategoryServices{
 		saveCategory.setName(categoryDto.getName());
 		saveCategory.setType(categoryDto.getType());
 		saveCategory.setStats(categoryDto.getStats());
-		saveCategory.setDeleted(categoryDto.isDeteled());
+		saveCategory.setDeleted(categoryDto.isDeleted());
 		
 		Category savedCategory=categoryRepository.save(saveCategory);
 		
@@ -55,7 +55,7 @@ public class CategoryServicesImpl implements CategoryServices{
 		existingCategory.setName(categoryDto.getName());
 		existingCategory.setStats(categoryDto.getStats());
 		existingCategory.setStats(categoryDto.getStats());
-		existingCategory.setDeleted(categoryDto.isDeteled());
+		existingCategory.setDeleted(categoryDto.isDeleted());
 		
 		Category savedCategory=categoryRepository.save(existingCategory);
 		return new CategoryDto().toDo(savedCategory);

@@ -2,15 +2,11 @@ package com.ids.argus.model;
 import java.util.List;
 
 import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
-
 
 @Entity
 public class Doctor extends BaseAuditable{
@@ -23,20 +19,19 @@ public class Doctor extends BaseAuditable{
 	private String lastName;
 	private String groupName;
 	private boolean state;
-	@Column(name = "is_deleted")
 	private boolean deleted;
 	private String speciality;
 	private String emailId;
 	private String alternativeEmailId;
 	
-	@OneToMany(mappedBy = "doctor", cascade = CascadeType.ALL, orphanRemoval = true)
-	private List<Category>categories;
-	
-	@OneToMany(mappedBy = "doctor", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	private List<Address>addresses;
-	
-	@OneToMany(mappedBy = "doctor", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	private List<Contact>contacts;
+	 @OneToMany(mappedBy = "doctor", cascade = CascadeType.ALL, orphanRemoval = true)
+	 private List<Address> addresses;
+	 
+	 @OneToMany(mappedBy = "doctor", cascade = CascadeType.ALL,orphanRemoval = true)
+	 private List<Contact>contacts;
+	 
+	 @OneToMany(mappedBy = "doctor", cascade = CascadeType.ALL,orphanRemoval = true)
+	 private List<Category>categories;
 
 	public Doctor() {
 		super();
@@ -44,8 +39,8 @@ public class Doctor extends BaseAuditable{
 	}
 
 	public Doctor(Long id, String type, String firstName, String lastName, String groupName, boolean state,
-			boolean deleted, String speciality, String emailId, String alternativeEmailId, List<Category> categories,
-			List<Address> addresses, List<Contact> contacts) {
+			boolean deleted, String speciality, String emailId, String alternativeEmailId, List<Address> addresses,
+			List<Contact> contacts, List<Category> categories) {
 		super();
 		this.id = id;
 		this.type = type;
@@ -57,9 +52,9 @@ public class Doctor extends BaseAuditable{
 		this.speciality = speciality;
 		this.emailId = emailId;
 		this.alternativeEmailId = alternativeEmailId;
-		this.categories = categories;
 		this.addresses = addresses;
 		this.contacts = contacts;
+		this.categories = categories;
 	}
 
 	public Long getId() {
@@ -142,14 +137,6 @@ public class Doctor extends BaseAuditable{
 		this.alternativeEmailId = alternativeEmailId;
 	}
 
-	public List<Category> getCategories() {
-		return categories;
-	}
-
-	public void setCategories(List<Category> categories) {
-		this.categories = categories;
-	}
-
 	public List<Address> getAddresses() {
 		return addresses;
 	}
@@ -166,6 +153,15 @@ public class Doctor extends BaseAuditable{
 		this.contacts = contacts;
 	}
 
-	
+	public List<Category> getCategories() {
+		return categories;
+	}
 
+	public void setCategories(List<Category> categories) {
+		this.categories = categories;
+	}
+
+		
+	
+	
 }

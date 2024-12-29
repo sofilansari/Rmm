@@ -15,7 +15,7 @@ import com.ids.argus.dto.AddressDto;
 import com.ids.argus.services.AddressServices;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/address")
 public class AddressController {
 	
 	private final AddressServices addressServices;

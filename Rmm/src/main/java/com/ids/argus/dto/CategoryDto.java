@@ -8,7 +8,7 @@ public class CategoryDto {
 	private String name;
 	private String stats;
 	private String type;
-	private boolean isDeteled;
+	private boolean isDeleted;
 	
 	
 	public CategoryDto toDo(Category category) {
@@ -17,7 +17,8 @@ public class CategoryDto {
 		dto.setId(category.getId());
 		dto.setName(category.getName());
 		dto.setType(category.getType());
-		dto.setDeteled(category.isDeleted());
+		dto.setDeleted(category.isDeleted());
+		dto.setStats(category.getStats());
 		return dto;
 		
 	}
@@ -63,13 +64,13 @@ public class CategoryDto {
 	}
 
 
-	public boolean isDeteled() {
-		return isDeteled;
+	public boolean isDeleted() {
+		return isDeleted;
 	}
 
 
-	public void setDeteled(boolean isDeteled) {
-		this.isDeteled = isDeteled;
+	public void setDeleted(boolean isDeleted) {
+		this.isDeleted = isDeleted;
 	}
 
 

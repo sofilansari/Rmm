@@ -45,6 +45,7 @@ public class ContactServicesImpl implements ContactServices{
 		savedContact.setType(contactDto.getType());
 		savedContact.setPhoneNo(contactDto.getPhoneNo());
 		savedContact.setDeleted(contactDto.isDeleted());
+		//savedContact.setVersion(contactDto.getVersion());
 		
 		Contact saved=contactRepository.save(savedContact);
 		

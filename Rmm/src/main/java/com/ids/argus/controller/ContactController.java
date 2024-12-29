@@ -39,7 +39,7 @@ public class ContactController {
 		
 	}
 	
-	@PostMapping("/{id}")
+	@PostMapping("/")
 	public ContactDto create(@RequestBody ContactDto contactDto) {
 		return contactServices.create(contactDto);
 		

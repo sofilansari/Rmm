@@ -23,6 +23,10 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.POST, "/api/signup").permitAll() 
                 .requestMatchers(HttpMethod.POST, "/api/login").permitAll() 
                 .requestMatchers("/api/docter/**").permitAll()
+                .requestMatchers("/api/address/**").permitAll()
+                .requestMatchers("/api/category/**").permitAll()
+                .requestMatchers("/api/contact/**").permitAll()
+                .requestMatchers("/api/**").permitAll()
                 .anyRequest().authenticated() 
             );
 

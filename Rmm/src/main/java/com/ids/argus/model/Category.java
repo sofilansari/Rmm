@@ -19,9 +19,9 @@ public class Category extends BaseAuditable{
 	private boolean isDeleted;
 	
 	@ManyToOne
-	@JoinColumn(name = "doctor_id", nullable = false)
+	@JoinColumn(name = "doctor_id")
 	private Doctor doctor;
-
+	
 	public Category() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -34,7 +34,7 @@ public class Category extends BaseAuditable{
 		this.stats = stats;
 		this.type = type;
 		this.isDeleted = isDeleted;
-		this.doctor = doctor;
+		this.doctor=doctor;
 	}
 
 	public Long getId() {
@@ -76,16 +76,12 @@ public class Category extends BaseAuditable{
 	public void setDeleted(boolean isDeleted) {
 		this.isDeleted = isDeleted;
 	}
-
-	public Doctor getDoctor() {
+	
+	public Doctor setDoctor() {
 		return doctor;
 	}
 
 	public void setDoctor(Doctor doctor) {
-		this.doctor = doctor;
+		this.doctor=doctor;
 	}
-	
-	
-	
-
 }
