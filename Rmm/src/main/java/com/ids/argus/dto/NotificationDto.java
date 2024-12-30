@@ -10,7 +10,7 @@ public class NotificationDto {
 	private Short states;
 	private boolean isDelete;
 	
-	public NotificationDto toDo(Notification notification) {
+	public NotificationDto toDto(Notification notification) {
 		
 		NotificationDto dto=new NotificationDto();
 		dto.setId(notification.getId());

@@ -25,7 +25,7 @@ public class RolesServicesImpl implements RolesServices{
 	@Override
 	public List<RolesDto> getAllRoles() {
 		List<Roles>rolesOfList=repository.findAll();
-		return rolesOfList.stream().map(roles -> new RolesDto().toDo(roles)).
+		return rolesOfList.stream().map(roles -> new RolesDto().toDto(roles)).
 				collect(Collectors.toList());
 	}
 
@@ -33,7 +33,7 @@ public class RolesServicesImpl implements RolesServices{
 	public RolesDto findById(Long id) {
 		Roles roles=repository.findById(id).
 				orElseThrow(() -> new RuntimeException("Roles not found with id"+ id));
-		return new RolesDto().toDo(roles);
+		return new RolesDto().toDto(roles);
 	}
 
 	@Override
@@ -43,7 +43,7 @@ public class RolesServicesImpl implements RolesServices{
 		savedRoles.setRolesName(rolesDto.getRolesName());
 		
 		Roles saved=repository.save(savedRoles);
-		return new RolesDto().toDo(saved);
+		return new RolesDto().toDto(saved);
 	}
 
 	@Override
@@ -55,7 +55,7 @@ public class RolesServicesImpl implements RolesServices{
 		exisitingRoles.setRolesName(rolesDto.getRolesName());
 		
 		Roles savedRoles=repository.save(exisitingRoles);
-		return new RolesDto().toDo(savedRoles);
+		return new RolesDto().toDto(savedRoles);
 	}
 
 	@Override

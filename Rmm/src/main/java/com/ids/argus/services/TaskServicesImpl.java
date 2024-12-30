@@ -25,7 +25,7 @@ public class TaskServicesImpl implements TaskServices{
 	@Override
 	public List<TaskDto> getAllTask() {
 		List<Task>tastOfList=taskRepository.findAll();
-		return tastOfList.stream().map(tast -> new TaskDto().toDo(tast)).
+		return tastOfList.stream().map(tast -> new TaskDto().toDto(tast)).
 				collect(Collectors.toList());
 	}
 
@@ -33,7 +33,7 @@ public class TaskServicesImpl implements TaskServices{
 	public TaskDto findById(Long id) {
 		Task tast=taskRepository.findById(id).
 				orElseThrow(() -> new RuntimeException("Tast not found with id "+ id));
-		return new TaskDto().toDo(tast);
+		return new TaskDto().toDto(tast);
 	}
 
 	@Override
@@ -46,7 +46,7 @@ public class TaskServicesImpl implements TaskServices{
 		savedTask.setPractices(taskDto.isPractices());
 		
 		Task task=taskRepository.save(savedTask);
-		return new TaskDto().toDo(task);
+		return new TaskDto().toDto(task);
 	}
 
 	@Override
@@ -61,7 +61,7 @@ public class TaskServicesImpl implements TaskServices{
 		exisitingTask.setPractices(taskDto.isPractices());
 		
 		Task savedExisiting=taskRepository.save(exisitingTask);
-		return new TaskDto().toDo(savedExisiting);
+		return new TaskDto().toDto(savedExisiting);
 	}
 
 	@Override

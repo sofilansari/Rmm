@@ -25,7 +25,7 @@ public class NotificationServicesImpl implements NotificationServices{
 	@Override
 	public List<NotificationDto> getAllNotification() {
 		List<Notification>notifications=notificationRepository.findAll();
-		return notifications.stream().map(notification -> new NotificationDto().toDo(notification)).
+		return notifications.stream().map(notification -> new NotificationDto().toDto(notification)).
 				collect(Collectors.toList());
 	}
 
@@ -33,7 +33,7 @@ public class NotificationServicesImpl implements NotificationServices{
 	public NotificationDto findById(Long id) {
 		Notification notifications=notificationRepository.findById(id).
 				orElseThrow(() -> new RuntimeException("Notification not found with id"+ id));
-		return new NotificationDto().toDo(notifications);
+		return new NotificationDto().toDto(notifications);
 	}
 
 	@Override
@@ -46,7 +46,7 @@ public class NotificationServicesImpl implements NotificationServices{
 		saveNotification.setDelete(notificationDto.isDelete());
 		
 		Notification saveNotifi=notificationRepository.save(saveNotification);
-		return new NotificationDto().toDo(saveNotifi);
+		return new NotificationDto().toDto(saveNotifi);
 	}
 
 	@Override
@@ -61,7 +61,7 @@ public class NotificationServicesImpl implements NotificationServices{
 		exisitingNotification.setDelete(notificationDto.isDelete());
 		
 		Notification saveExisiting=notificationRepository.save(exisitingNotification);
-		return new NotificationDto().toDo(saveExisiting);
+		return new NotificationDto().toDto(saveExisiting);
 	}
 
 	@Override

@@ -1,5 +1,8 @@
 package com.ids.argus.dto;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import com.ids.argus.model.Users;
 
 public class UsersDto {
@@ -15,6 +18,10 @@ public class UsersDto {
 	private int states;
 	private boolean isDelete;
 	
+	private List<TaskDto>tasks;
+	private List<AddressDto>addresses;
+	private List<ContactDto>contacts;
+	
 	public UsersDto toDo(Users users) {
 		
 		UsersDto dto=new UsersDto();
@@ -29,7 +36,14 @@ public class UsersDto {
 		dto.setStates(users.getStates());
 		dto.setDelete(users.isDelete());
 		
-		return dto;
+		if (users.getTasks() != null) {
+	        dto.setTasks(users.getTasks().stream()
+	            .map(task -> new TaskDto().toDto(task))
+	            .collect(Collectors.toList()));
+	    }
+
+
+	    return dto;
 		
 	}
 
@@ -111,6 +125,30 @@ public class UsersDto {
 
 	public void setDelete(boolean isDelete) {
 		this.isDelete = isDelete;
+	}
+
+	public List<TaskDto> getTasks() {
+		return tasks;
+	}
+
+	public void setTasks(List<TaskDto> tasks) {
+		this.tasks = tasks;
+	}
+
+	public List<AddressDto> getAddresses() {
+		return addresses;
+	}
+
+	public void setAddresses(List<AddressDto> addresses) {
+		this.addresses = addresses;
+	}
+
+	public List<ContactDto> getContacts() {
+		return contacts;
+	}
+
+	public void setContacts(List<ContactDto> contacts) {
+		this.contacts = contacts;
 	}
 
 	

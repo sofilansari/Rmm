@@ -25,22 +25,23 @@ public class Users extends BaseAuditable{
 	private int states;
 	private boolean isDelete;
 	
-	@OneToMany(mappedBy = "users", cascade = CascadeType.ALL,orphanRemoval = true)
+	@OneToMany(mappedBy = "users", cascade = CascadeType.ALL)
 	private List<Task>tasks;
 	
-	@OneToMany(mappedBy = "users" ,cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(mappedBy = "users" ,cascade = CascadeType.ALL)
 	private List<Contact>contacts;
 	
 	@OneToMany(mappedBy = "users" ,cascade = CascadeType.ALL)
 	private List<Address>addresses;
-	
+
 	public Users() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
 	public Users(Long id, String firstName, String lastName, String emailId, String password, String confirmPassword,
-			String contact, String address, int states, boolean isDelete) {
+			String contact, String address, int states, boolean isDelete, List<Task> tasks, List<Contact> contacts,
+			List<Address> addresses) {
 		super();
 		this.id = id;
 		this.firstName = firstName;
@@ -52,6 +53,9 @@ public class Users extends BaseAuditable{
 		this.address = address;
 		this.states = states;
 		this.isDelete = isDelete;
+		this.tasks = tasks;
+		this.contacts = contacts;
+		this.addresses = addresses;
 	}
 
 	public Long getId() {
@@ -133,7 +137,31 @@ public class Users extends BaseAuditable{
 	public void setDelete(boolean isDelete) {
 		this.isDelete = isDelete;
 	}
-	
+
+	public List<Task> getTasks() {
+		return tasks;
+	}
+
+	public void setTasks(List<Task> tasks) {
+		this.tasks = tasks;
+	}
+
+	public List<Contact> getContacts() {
+		return contacts;
+	}
+
+	public void setContacts(List<Contact> contacts) {
+		this.contacts = contacts;
+	}
+
+	public List<Address> getAddresses() {
+		return addresses;
+	}
+
+	public void setAddresses(List<Address> addresses) {
+		this.addresses = addresses;
+	}
+
 	
 
 }

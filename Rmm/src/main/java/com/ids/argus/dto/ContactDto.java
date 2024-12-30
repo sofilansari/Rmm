@@ -1,7 +1,5 @@
 package com.ids.argus.dto;
 
-import java.util.List;
-
 import com.ids.argus.model.Contact;
 
 public class ContactDto {
@@ -11,9 +9,7 @@ public class ContactDto {
 	private String phoneNo;
 	private boolean isDeleted;
 	
-//	private Long version;
-	
-	public ContactDto toDo(Contact contact) {
+	public ContactDto toDto(Contact contact) {
 		
 		ContactDto dto=new ContactDto();
 		
@@ -21,7 +17,6 @@ public class ContactDto {
 		dto.setType(contact.getType());
 		dto.setPhoneNo(contact.getPhoneNo());
 		dto.setDeleted(contact.isDeleted());
-//		dto.setVersion(contact.getVersion());
 		
 		return dto;
 		

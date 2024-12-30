@@ -25,7 +25,7 @@ public class ContactServicesImpl implements ContactServices{
 	@Override
 	public List<ContactDto> getAllContct() {
 		List<Contact>contactsOfList=contactRepository.findAll();
-		return contactsOfList.stream().map(contect -> new ContactDto().toDo(contect)).
+		return contactsOfList.stream().map(contect -> new ContactDto().toDto(contect)).
 				collect(Collectors.toList());
 	}
 
@@ -34,7 +34,7 @@ public class ContactServicesImpl implements ContactServices{
 		
 		Contact contact=contactRepository.findById(id).
 				orElseThrow(()-> new RuntimeException("Contact not found with id"+ id));
-		return new ContactDto().toDo(contact);
+		return new ContactDto().toDto(contact);
 	}
 
 	@Override
@@ -49,7 +49,7 @@ public class ContactServicesImpl implements ContactServices{
 		
 		Contact saved=contactRepository.save(savedContact);
 		
-		return new ContactDto().toDo(saved);
+		return new ContactDto().toDto(saved);
 	}
 
 	@Override
@@ -65,7 +65,7 @@ public class ContactServicesImpl implements ContactServices{
 		
 		Contact savedexisiting=contactRepository.save(exisitingContact);
 		
-		return new ContactDto().toDo(savedexisiting);
+		return new ContactDto().toDto(savedexisiting);
 	}
 
 	@Override

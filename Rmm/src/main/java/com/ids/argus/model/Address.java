@@ -32,7 +32,8 @@ public class Address extends BaseAuditable{
 		// TODO Auto-generated constructor stub
 	}
 
-	public Address(Long id, String type, String city, String state, String zipcode, boolean deleted, Doctor doctor) {
+	public Address(Long id, String type, String city, String state, String zipcode, boolean deleted, Doctor doctor,
+			Users users) {
 		super();
 		this.id = id;
 		this.type = type;
@@ -41,6 +42,7 @@ public class Address extends BaseAuditable{
 		this.zipcode = zipcode;
 		this.deleted = deleted;
 		this.doctor = doctor;
+		this.users = users;
 	}
 
 	public Long getId() {
@@ -99,8 +101,14 @@ public class Address extends BaseAuditable{
 		this.doctor = doctor;
 	}
 
+	public Users getUsers() {
+		return users;
+	}
 
-   
+	public void setUsers(Users users) {
+		this.users = users;
+	}
 
+	
 
 }

@@ -6,4 +6,6 @@ import com.ids.argus.model.Contact;
 
 public interface ContactRepository extends JpaRepository<Contact, Long>{
 
+
+
 }

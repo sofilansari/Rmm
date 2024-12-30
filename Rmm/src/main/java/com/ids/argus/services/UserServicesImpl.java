@@ -62,7 +62,7 @@ public class UserServicesImpl implements UserServices{
 
 	        User savedUser = userRepository.save(user);
 
-	        return new UserDto().toDo(savedUser);
+	        return new UserDto().toDto(savedUser);
 	    }
 
 	    @Override
@@ -74,7 +74,7 @@ public class UserServicesImpl implements UserServices{
 	            throw new RuntimeException("Invalid credentials");
 	        }
 
-	        return new UserDto().toDo(user);  
+	        return new UserDto().toDto(user);  
 	    }
 }
 

@@ -20,51 +20,73 @@ public class Task {
 	private boolean practices;
 	
 	@ManyToOne
-	@JoinColumn(name = "users_id")
+	@JoinColumn(name = "users_id", referencedColumnName = "id")
 	private Users users;
-	
+
 	public Task() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public Task(Long id, String taskName, boolean state, boolean isDelete, boolean practices) {
+
+	public Task(Long id, String taskName, boolean state, boolean isDelete, boolean practices, Users users) {
 		super();
 		this.id = id;
 		this.taskName = taskName;
 		this.state = state;
 		this.isDelete = isDelete;
 		this.practices = practices;
+		this.users = users;
 	}
+
 	public Long getId() {
 		return id;
 	}
+
 	public void setId(Long id) {
 		this.id = id;
 	}
+
 	public String getTaskName() {
 		return taskName;
 	}
+
 	public void setTaskName(String taskName) {
 		this.taskName = taskName;
 	}
+
 	public boolean isState() {
 		return state;
 	}
+
 	public void setState(boolean state) {
 		this.state = state;
 	}
+
 	public boolean isDelete() {
 		return isDelete;
 	}
+
 	public void setDelete(boolean isDelete) {
 		this.isDelete = isDelete;
 	}
+
 	public boolean isPractices() {
 		return practices;
 	}
+
 	public void setPractices(boolean practices) {
 		this.practices = practices;
 	}
+
+	public Users getUsers() {
+		return users;
+	}
+
+	public void setUsers(Users users) {
+		this.users = users;
+	}
+	
+	
 	
 
 }

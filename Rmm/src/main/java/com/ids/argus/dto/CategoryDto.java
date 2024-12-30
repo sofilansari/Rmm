@@ -11,7 +11,7 @@ public class CategoryDto {
 	private boolean isDeleted;
 	
 	
-	public CategoryDto toDo(Category category) {
+	public CategoryDto toDto(Category category) {
 		
 		CategoryDto dto=new CategoryDto();
 		dto.setId(category.getId());

@@ -10,7 +10,7 @@ public class TaskDto {
 	private boolean isDelete;
 	private boolean practices;
 	
-	public TaskDto toDo(Task task) {
+	public TaskDto toDto(Task task) {
 		
 		TaskDto dto=new TaskDto();
 		dto.setId(task.getId());

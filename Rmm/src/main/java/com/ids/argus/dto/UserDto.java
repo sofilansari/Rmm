@@ -15,7 +15,7 @@ public class UserDto {
 	    private Set<RolesDto> roles;
 
 	    // Mapping User entity to UserDto
-	    public UserDto toDo(User user) {
+	    public UserDto toDto(User user) {
 	    	
 	        UserDto dto = new UserDto();
 	        dto.setId(user.getId());
@@ -26,7 +26,7 @@ public class UserDto {
 
 	        if (user.getRoles() != null) {
 	            Set<RolesDto> rolesDtos = user.getRoles().stream()
-	                    .map(role -> new RolesDto().toDo(role))
+	                    .map(role -> new RolesDto().toDto(role))
 	                    .collect(Collectors.toSet());
 	            dto.setRoles(rolesDtos);
 	        }

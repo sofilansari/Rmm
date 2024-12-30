@@ -24,7 +24,7 @@ public class CategoryServicesImpl implements CategoryServices{
 	@Override
 	public List<CategoryDto> getAllCategory() {
 		List<Category>categoryOfList=categoryRepository.findAll();
-		return categoryOfList.stream().map(category -> new CategoryDto().toDo(category)).
+		return categoryOfList.stream().map(category -> new CategoryDto().toDto(category)).
 				collect(Collectors.toList());
 	}
 
@@ -32,7 +32,7 @@ public class CategoryServicesImpl implements CategoryServices{
 	public CategoryDto findById(Long id) {
 		Category category=categoryRepository.findById(id).
 				orElseThrow(() -> new RuntimeException("Category not found with id "+id));
-		return new CategoryDto().toDo(category);
+		return new CategoryDto().toDto(category);
 	}
 
 	@Override
@@ -45,7 +45,7 @@ public class CategoryServicesImpl implements CategoryServices{
 		
 		Category savedCategory=categoryRepository.save(saveCategory);
 		
-		return new CategoryDto().toDo(savedCategory);
+		return new CategoryDto().toDto(savedCategory);
 	}
 
 	@Override
@@ -58,7 +58,7 @@ public class CategoryServicesImpl implements CategoryServices{
 		existingCategory.setDeleted(categoryDto.isDeleted());
 		
 		Category savedCategory=categoryRepository.save(existingCategory);
-		return new CategoryDto().toDo(savedCategory);
+		return new CategoryDto().toDto(savedCategory);
 	}
 
 	@Override

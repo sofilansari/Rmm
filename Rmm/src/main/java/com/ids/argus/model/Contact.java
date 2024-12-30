@@ -26,62 +26,72 @@ public class Contact extends BaseAuditable{
     private Doctor doctor;
     
     @ManyToOne
-    @JoinColumn(name = "users_id")
+    @JoinColumn(name = "users_id", nullable = false)
     private Users users;
 
+	public Contact() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 
-    public Contact() {
-        super();
-    }
+	public Contact(Long id, String type, String phoneNo, boolean isDeleted, Doctor doctor, Users users) {
+		super();
+		this.id = id;
+		this.type = type;
+		this.phoneNo = phoneNo;
+		this.isDeleted = isDeleted;
+		this.doctor = doctor;
+		this.users = users;
+	}
 
-    public Contact(Long id, String type, String phoneNo, boolean isDeleted,Doctor doctor) {
-        super();
-        this.id = id;
-        this.type = type;
-        this.phoneNo = phoneNo;
-        this.isDeleted = isDeleted;
-        this.doctor=doctor;
-    }
+	public Long getId() {
+		return id;
+	}
 
-    public Long getId() {
-        return id;
-    }
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+	public String getType() {
+		return type;
+	}
 
-    public String getType() {
-        return type;
-    }
+	public void setType(String type) {
+		this.type = type;
+	}
 
-    public void setType(String type) {
-        this.type = type;
-    }
+	public String getPhoneNo() {
+		return phoneNo;
+	}
 
-    public String getPhoneNo() {
-        return phoneNo;
-    }
+	public void setPhoneNo(String phoneNo) {
+		this.phoneNo = phoneNo;
+	}
 
-    public void setPhoneNo(String phoneNo) {
-        this.phoneNo = phoneNo;
-    }
+	public boolean isDeleted() {
+		return isDeleted;
+	}
 
-    public boolean isDeleted() {
-        return isDeleted;
-    }
+	public void setDeleted(boolean isDeleted) {
+		this.isDeleted = isDeleted;
+	}
 
-    public void setDeleted(boolean isDeleted) {
-        this.isDeleted = isDeleted;
-    }
-	
-	public Doctor setDoctor() {
+	public Doctor getDoctor() {
 		return doctor;
-		
 	}
-	
+
 	public void setDoctor(Doctor doctor) {
-		this.doctor=doctor;
-		
+		this.doctor = doctor;
 	}
+
+	public Users getUsers() {
+		return users;
+	}
+
+	public void setUsers(Users users) {
+		this.users = users;
+	}
+
+
+   
 }

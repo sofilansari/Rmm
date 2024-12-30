@@ -7,7 +7,7 @@ public class RolesDto {
 	private Long id;
 	private String rolesName;
 	
-	public RolesDto toDo(Roles roles) {
+	public RolesDto toDto(Roles roles) {
 		
 		RolesDto dto=new RolesDto();
 		

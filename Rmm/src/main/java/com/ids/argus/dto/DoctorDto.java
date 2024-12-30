@@ -44,13 +44,13 @@ public class DoctorDto {
 	        
 	        if(doctor.getContacts() != null) {
 	        	dto.setContacts(doctor.getContacts().stream()
-	        			.map(contac -> new ContactDto().toDo(contac))
+	        			.map(contac -> new ContactDto().toDto(contac))
 	        			.collect(Collectors.toList()));
 	        }
 	        
 	        if(doctor.getCategories() !=null) {
 	        	dto.setCategories(doctor.getCategories().stream()
-	        			.map(categary -> new CategoryDto().toDo(categary))
+	        			.map(categary -> new CategoryDto().toDto(categary))
 	        			.collect(Collectors.toList()));
 	        }
 
