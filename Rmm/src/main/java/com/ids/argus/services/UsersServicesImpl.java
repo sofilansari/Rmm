@@ -5,10 +5,6 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import com.ids.argus.dto.AddressDto;
-import com.ids.argus.dto.ContactDto;
-import com.ids.argus.dto.TaskDto;
 import com.ids.argus.dto.UsersDto;
 import com.ids.argus.model.Address;
 import com.ids.argus.model.Contact;
@@ -36,6 +32,7 @@ public class UsersServicesImpl implements UsersServices{
 	
 	@Autowired
 	private ContactRepository contactRepository;
+	
 
 
 	@Override
@@ -69,19 +66,45 @@ public class UsersServicesImpl implements UsersServices{
 	        // Save the User entity
 	        Users savedUser = usersRepository.save(users);
 
-	        if(usersDto.getTasks() !=null && !usersDto.getTasks().isEmpty()) {
-	        	for(TaskDto taskDto :usersDto.getTasks()) {
-	        		Task task=new Task();
-	        		task.setTaskName(taskDto.getTaskName());
-	        		task.setState(taskDto.isState());
-	        		task.setDelete(taskDto.isDelete());
-	        		task.setPractices(taskDto.isPractices());
-	        		task.setUsers(savedUser);
-	        		taskRepository.save(task);
-	        				
-	        	}
+	        if (usersDto.getTasks() != null) {
+	            List<Task> tasks = usersDto.getTasks().stream().map(taskDto -> {
+	                Task task = new Task();
+	                task.setTaskName(taskDto.getTaskName());
+	                task.setState(taskDto.isState());
+	                task.setDelete(taskDto.isDelete());
+	                task.setPractices(taskDto.isPractices());
+	                task.setUsers(savedUser);
+	                return taskRepository.save(task);
+	            }).collect(Collectors.toList());
+	            savedUser.setTasks(tasks);
 	        }
 
+	        if(usersDto.getAddress() !=null) {
+	        	List<Address> addresses=usersDto.getAddresses().stream().map(addressDto ->{
+	        		Address address=new Address();
+	        		address.setType(addressDto.getType());
+	        		address.setCity(addressDto.getCity());
+	        		address.setState(addressDto.getState());
+	        		address.setZipcode(addressDto.getZipcode());
+	        		address.setDeleted(addressDto.isDeleted());
+	        		address.setUsers(savedUser);
+	        		
+	        		return addressRepository.save(address);
+	        	}).collect(Collectors.toList());
+	        	savedUser.setAddresses(addresses);
+	        }
+	        
+	       if(usersDto.getContacts() !=null) {
+	    	   List<Contact>contacs=usersDto.getContacts().stream().map(contactDto -> {
+	    		   Contact contact=new Contact();
+	    		   contact.setType(contactDto.getType());
+	    		   contact.setPhoneNo(contactDto.getPhoneNo());
+	    		   contact.setDeleted(contactDto.isDeleted());
+	    		   contact.setUsers(savedUser);
+	    		   return contactRepository.save(contact);
+	    	   }).collect(Collectors.toList());
+	    	   savedUser.setContacts(contacs);
+	       }
 	        return new UsersDto().toDo(savedUser);
 	}
 

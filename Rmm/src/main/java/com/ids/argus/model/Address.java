@@ -1,6 +1,7 @@
 package com.ids.argus.model;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -23,9 +24,9 @@ public class Address extends BaseAuditable{
     @JoinColumn(name = "doctor_id")
     private Doctor doctor;
     
-    @ManyToOne
-    @JoinColumn(name = "users_id")
-    private Users users;
+    @ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "users_id")
+	private Users users;
 
 	public Address() {
 		super();

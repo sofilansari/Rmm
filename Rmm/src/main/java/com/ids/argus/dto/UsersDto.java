@@ -36,12 +36,22 @@ public class UsersDto {
 		dto.setStates(users.getStates());
 		dto.setDelete(users.isDelete());
 		
-		if (users.getTasks() != null) {
-	        dto.setTasks(users.getTasks().stream()
-	            .map(task -> new TaskDto().toDto(task))
-	            .collect(Collectors.toList()));
-	    }
-
+		  if (users.getTasks() != null) {
+	            dto.setTasks(users.getTasks().stream()
+	                    .map(task -> new TaskDto().toDto(task))
+	                    .collect(Collectors.toList()));
+	        }
+		
+		if(users.getAddresses() !=null) {
+			dto.setAddresses(users.getAddresses().stream().
+					map(address -> new AddressDto().toDto(address)).
+					collect(Collectors.toList()));
+		}
+		
+		if(users.getContacts() != null) {
+			dto.setContacts(users.getContacts().stream().
+					map(contact -> new ContactDto().toDto(contact)).collect(Collectors.toList()));
+		}
 
 	    return dto;
 		

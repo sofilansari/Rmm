@@ -20,7 +20,7 @@ public class Task {
 	private boolean practices;
 	
 	@ManyToOne
-	@JoinColumn(name = "users_id", referencedColumnName = "id")
+	@JoinColumn(name = "users_id")
 	private Users users;
 
 	public Task() {

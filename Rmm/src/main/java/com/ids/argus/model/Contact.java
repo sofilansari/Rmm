@@ -17,16 +17,13 @@ public class Contact extends BaseAuditable{
     private String type;
     private String phoneNo;
     private boolean isDeleted;
-
-//    @Version
-//    private Long version;  // Version field for optimistic locking
     
     @ManyToOne
     @JoinColumn(name = "doctor_id")
     private Doctor doctor;
     
     @ManyToOne
-    @JoinColumn(name = "users_id", nullable = false)
+    @JoinColumn(name = "users_id")
     private Users users;
 
 	public Contact() {

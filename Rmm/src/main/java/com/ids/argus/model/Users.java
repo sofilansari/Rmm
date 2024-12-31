@@ -4,6 +4,7 @@ import java.util.List;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -25,7 +26,7 @@ public class Users extends BaseAuditable{
 	private int states;
 	private boolean isDelete;
 	
-	@OneToMany(mappedBy = "users", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "users", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
 	private List<Task>tasks;
 	
 	@OneToMany(mappedBy = "users" ,cascade = CascadeType.ALL)
