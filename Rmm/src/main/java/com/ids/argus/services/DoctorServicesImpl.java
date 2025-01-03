@@ -6,10 +6,6 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import com.ids.argus.dto.AddressDto;
-import com.ids.argus.dto.CategoryDto;
-import com.ids.argus.dto.ContactDto;
 import com.ids.argus.dto.DoctorDto;
 import com.ids.argus.model.Address;
 import com.ids.argus.model.Category;
@@ -66,47 +62,44 @@ public class DoctorServicesImpl implements DoctorServices{
 
 	    	    Doctor savedDoctor = doctorRepository.save(doctor);
 	    	 
-	    	   if (doctorDto.getAddresses() != null && !doctorDto.getAddresses().isEmpty()) {
-	    	        for (AddressDto addressDto : doctorDto.getAddresses()) {
-	    	            Address address = new Address();
-	    	            address.setType(addressDto.getType());
-	    	            address.setCity(addressDto.getCity());
-	    	            address.setState(addressDto.getState());
-	    	            address.setZipcode(addressDto.getZipcode());
-	    	            address.setDeleted(addressDto.isDeleted());
-	    	            address.setDoctor(savedDoctor);  
-	    	            addressRepository.save(address);
-	    	            
-	    	        }
-	    	          	        
-	    	    }
+	    	  if(doctorDto.getAddresses() !=null) {
+	    		  List<Address> addresses=doctorDto.getAddresses().stream().map(addressDto -> {
+	    			  Address address=new Address();
+	    			  address.setCity(addressDto.getCity());
+	    			  address.setType(addressDto.getType());
+	    			  address.setState(addressDto.getState());
+	    			  address.setZipcode(addressDto.getZipcode());
+	    			  address.setDeleted(addressDto.isDeleted());
+	    			  address.setDoctor(savedDoctor);
+	    			  return addressRepository.save(address);
+	    		  }).collect(Collectors.toList());
+	    		  savedDoctor.setAddresses(addresses);
+	    	  }
 	    	   
-	    	   if(doctorDto.getContacts() !=null && !doctorDto.getContacts().isEmpty()) {
-	    		   for(ContactDto contactDto : doctorDto.getContacts()) {
+	    	   if(doctorDto.getContacts() !=null) {
+	    		   List<Contact>contacts=doctorDto.getContacts().stream().map(contactDto -> {
 	    			   Contact contact=new Contact();
 	    			   contact.setType(contactDto.getType());
 	    			   contact.setPhoneNo(contactDto.getPhoneNo());
 	    			   contact.setDeleted(contactDto.isDeleted());
 	    			   contact.setDoctor(savedDoctor);
-	    			   contactRepository.save(contact);
-	    		   }
+	    			   return contactRepository.save(contact);
+	    		   }).collect(Collectors.toList());
+	    		   savedDoctor.setContacts(contacts);
 	    	   }
 	    	   
-	    	   if(doctorDto.getCategories() !=null &&!doctorDto.getCategories().isEmpty()) {
-	    		   for(CategoryDto categoryDto : doctorDto.getCategories()) {
-	    			   
+	    	   if(doctorDto.getCategories() !=null) {
+	    		   List<Category>categories=doctorDto.getCategories().stream().map(categoryDto -> {
 	    			   Category category=new Category();
-	    			   category.setType(categoryDto.getType());
 	    			   category.setName(categoryDto.getName());
 	    			   category.setStats(categoryDto.getStats());
+	    			   category.setType(categoryDto.getType());
 	    			   category.setDeleted(categoryDto.isDeleted());
-	    			   
-	    			   category.setDoctor(savedDoctor);
-	    			   categoryRepository.save(category);
-	    			   
-	    		   }
-	    		   
+	    			   return categoryRepository.save(category);
+	    		   }).collect(Collectors.toList());
+	    		   savedDoctor.setCategories(categories);
 	    	   }
+	    	   
 
 	    	    return new DoctorDto().toDto(savedDoctor);	     }
 	    
