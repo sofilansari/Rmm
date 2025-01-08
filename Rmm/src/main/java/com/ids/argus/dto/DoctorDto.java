@@ -12,7 +12,7 @@ public class DoctorDto {
 	private String firstName;
 	private String lastName;
 	private String groupName;
-	private boolean state;
+	private boolean status;
 	private boolean deleted;
 	private String speciality;
 	private String emailId;
@@ -29,7 +29,7 @@ public class DoctorDto {
 	        dto.setFirstName(doctor.getFirstName());
 	        dto.setLastName(doctor.getLastName());
 	        dto.setGroupName(doctor.getGroupName());
-	        dto.setState(doctor.isState());
+	        dto.setStatus(doctor.isStatus());
 	        dto.setDeleted(doctor.isDeleted());  
 	        dto.setDeleted(doctor.isDeleted());  // Fix the mapping to isDeleted() instead of isDelete()
 	        dto.setSpeciality(doctor.getSpeciality());
@@ -97,12 +97,12 @@ public class DoctorDto {
 			this.groupName = groupName;
 		}
 
-		public boolean isState() {
-			return state;
+		public boolean isStatus() {
+			return status;
 		}
 
-		public void setState(boolean state) {
-			this.state = state;
+		public void setStatus(boolean status) {
+			this.status = status;
 		}
 
 		public boolean isDeleted() {

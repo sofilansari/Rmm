@@ -31,7 +31,17 @@ public class DoctorServicesImpl implements DoctorServices{
 		
 		@Autowired
 		private CategoryRepository categoryRepository;
-	    
+		
+		
+		@Override
+		public List<DoctorDto> getDoctorsByStatus(boolean status) {
+			
+			List<Doctor>doctors=doctorRepository.findByStatus(status);
+			
+			return doctors.stream().map(doctor -> new DoctorDto().toDto(doctor))
+					.collect(Collectors.toList());
+		}
+
 
 	    @Override
 	    public List<DoctorDto> getAllDoctor() {
@@ -54,7 +64,7 @@ public class DoctorServicesImpl implements DoctorServices{
 	    	    doctor.setFirstName(doctorDto.getFirstName());
 	    	    doctor.setLastName(doctorDto.getLastName());
 	    	    doctor.setGroupName(doctorDto.getGroupName());
-	    	    doctor.setState(doctorDto.isState());
+	    	    doctor.setStatus(doctorDto.isStatus());
 	    	    doctor.setDeleted(doctorDto.isDeleted());
 	    	    doctor.setSpeciality(doctorDto.getSpeciality());
 	    	    doctor.setEmailId(doctorDto.getEmailId());
@@ -119,7 +129,7 @@ public class DoctorServicesImpl implements DoctorServices{
 	        existingDoctor.setFirstName(doctorDto.getFirstName());
 	        existingDoctor.setLastName(doctorDto.getLastName());
 	        existingDoctor.setGroupName(doctorDto.getGroupName());
-	        existingDoctor.setState(doctorDto.isState());
+	        existingDoctor.setStatus(doctorDto.isStatus());
 	        existingDoctor.setSpeciality(doctorDto.getSpeciality());
 	        existingDoctor.setEmailId(doctorDto.getEmailId());
 	        existingDoctor.setAlternativeEmailId(doctorDto.getAlternativeEmailId());
@@ -130,5 +140,6 @@ public class DoctorServicesImpl implements DoctorServices{
 	        
 	        return new DoctorDto().toDto(existingDoctor);
 	    }
+
 
 }

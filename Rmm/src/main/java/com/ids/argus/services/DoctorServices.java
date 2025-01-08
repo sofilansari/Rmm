@@ -16,4 +16,6 @@ public interface DoctorServices {
 
 	public void delete(Long id);
 
+	public List<DoctorDto> getDoctorsByStatus(boolean status);
+
 }

@@ -18,7 +18,7 @@ public class Doctor extends BaseAuditable{
 	private String firstName;
 	private String lastName;
 	private String groupName;
-	private boolean state;
+	private boolean status;
 	private boolean deleted;
 	private String speciality;
 	private String emailId;
@@ -38,7 +38,7 @@ public class Doctor extends BaseAuditable{
 		// TODO Auto-generated constructor stub
 	}
 
-	public Doctor(Long id, String type, String firstName, String lastName, String groupName, boolean state,
+	public Doctor(Long id, String type, String firstName, String lastName, String groupName, boolean status,
 			boolean deleted, String speciality, String emailId, String alternativeEmailId, List<Address> addresses,
 			List<Contact> contacts, List<Category> categories) {
 		super();
@@ -47,7 +47,7 @@ public class Doctor extends BaseAuditable{
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.groupName = groupName;
-		this.state = state;
+		this.status = status;
 		this.deleted = deleted;
 		this.speciality = speciality;
 		this.emailId = emailId;
@@ -97,12 +97,12 @@ public class Doctor extends BaseAuditable{
 		this.groupName = groupName;
 	}
 
-	public boolean isState() {
-		return state;
+	public boolean isStatus() {
+		return status;
 	}
 
-	public void setState(boolean state) {
-		this.state = state;
+	public void setStatus(boolean status) {
+		this.status = status;
 	}
 
 	public boolean isDeleted() {
