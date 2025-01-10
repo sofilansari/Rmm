@@ -2,6 +2,7 @@ package com.ids.argus.controller;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ids.argus.dto.UsersDto;
@@ -18,14 +20,18 @@ import com.ids.argus.services.UsersServices;
 @RequestMapping("/api/users")
 public class UsersController {
 	
-	private final UsersServices usersServices;
-
-	public UsersController(UsersServices usersServices) {
+	@Autowired
+	private UsersServices usersServices;
+	
+	
+	@GetMapping("/filter")
+	public List<UsersDto>findByisDelete(@RequestParam boolean status){
 		
-		this.usersServices = usersServices;
+		System.out.println("status: " + status);
+		
+		return usersServices.findByisDelete(status);
+		
 	}
-	
-	
 	@GetMapping()
 	public List<UsersDto>gettAllUser(){
 		return usersServices.gettAllUser();

@@ -34,6 +34,13 @@ public class UsersServicesImpl implements UsersServices{
 	private ContactRepository contactRepository;
 	
 
+	@Override
+	public List<UsersDto> findByisDelete(boolean status) {
+		List<Users>usList=usersRepository.findByStatus(status);
+		return usList.stream().map(users -> new UsersDto().
+				toDo(users)).collect(Collectors.toList());
+	}
+	
 
 	@Override
 	public List<UsersDto> gettAllUser() {
@@ -62,6 +69,7 @@ public class UsersServicesImpl implements UsersServices{
 	        users.setAddress(usersDto.getAddress());
 	        users.setStates(usersDto.getStates());
 	        users.setDelete(usersDto.isDelete());
+	        users.setStatus(usersDto.isStatus());
 
 	        // Save the User entity
 	        Users savedUser = usersRepository.save(users);
@@ -137,6 +145,7 @@ public class UsersServicesImpl implements UsersServices{
 	
 	usersRepository.delete(deleteUsers);
 	}
+
 	
 	
 

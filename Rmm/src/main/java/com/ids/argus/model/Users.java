@@ -23,6 +23,7 @@ public class Users extends BaseAuditable{
 	private String confirmPassword;
 	private String contact;
 	private String address;
+	private boolean status;
 	private int states;
 	private boolean isDelete;
 	
@@ -41,8 +42,8 @@ public class Users extends BaseAuditable{
 	}
 
 	public Users(Long id, String firstName, String lastName, String emailId, String password, String confirmPassword,
-			String contact, String address, int states, boolean isDelete, List<Task> tasks, List<Contact> contacts,
-			List<Address> addresses) {
+			String contact, String address, boolean status, int states, boolean isDelete, List<Task> tasks,
+			List<Contact> contacts, List<Address> addresses) {
 		super();
 		this.id = id;
 		this.firstName = firstName;
@@ -52,6 +53,7 @@ public class Users extends BaseAuditable{
 		this.confirmPassword = confirmPassword;
 		this.contact = contact;
 		this.address = address;
+		this.status = status;
 		this.states = states;
 		this.isDelete = isDelete;
 		this.tasks = tasks;
@@ -123,6 +125,14 @@ public class Users extends BaseAuditable{
 		this.address = address;
 	}
 
+	public boolean isStatus() {
+		return status;
+	}
+
+	public void setStatus(boolean status) {
+		this.status = status;
+	}
+
 	public int getStates() {
 		return states;
 	}
@@ -162,6 +172,8 @@ public class Users extends BaseAuditable{
 	public void setAddresses(List<Address> addresses) {
 		this.addresses = addresses;
 	}
+
+	
 
 	
 

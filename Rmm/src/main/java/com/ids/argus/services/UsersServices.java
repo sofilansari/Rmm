@@ -16,4 +16,6 @@ public interface UsersServices {
 
 	public void delete(Long id);
 
+	public List<UsersDto> findByisDelete(boolean status);
+
 }

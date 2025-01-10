@@ -15,6 +15,7 @@ public class UsersDto {
 	private String confirmPassword;
 	private String contact;
 	private String address;
+	private boolean status;
 	private int states;
 	private boolean isDelete;
 	
@@ -121,6 +122,14 @@ public class UsersDto {
 		this.address = address;
 	}
 
+	public boolean isStatus() {
+		return status;
+	}
+
+	public void setStatus(boolean status) {
+		this.status = status;
+	}
+
 	public int getStates() {
 		return states;
 	}
@@ -160,6 +169,8 @@ public class UsersDto {
 	public void setContacts(List<ContactDto> contacts) {
 		this.contacts = contacts;
 	}
+
+	
 
 	
 	
